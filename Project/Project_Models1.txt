@@ -1,0 +1,20 @@
+4  :  dlnUnemRate1 dlnAllEmployeesl1 dlnLabFl2 dlnUnemRate8
+
+5  :  dlnUnemRate1 dlnAllEmployeesl1 dlnLabFl2 dlnLabFl6 dlnUnemRate8
+
+6  :  dlnUnemRate1 dlnAllEmployeesl1 dlnLabFl2 dlnUnemRate6 dlnLabFl5 dlnUnemRate8
+
+7  :  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl7 dlnLabFl5 
+dlnLabFl6 dlnUnemRate4 dlnAllEmployeesl2
+
+8  :  dlnUnemRate1 dlnAllEmployeesl1 dlnUnemRate9 dlnAllEmployeesl7 
+dlnLabFl5 dlnLabFl6 dlnUnemRate4 dlnAllEmployeesl2
+
+9  :  dlnUnemRate1 dlnUnemRate12 dlnUnemRate4 dlnUnemRate6 dlnUnemRate9
+dlnAllEmployeesl1 dlnAllEmployeesl2 dlnAllEmployeesl7  
+dlnLabFl5 
+
+
+10 :  dlnUnemRate1 dlnUnemRate12 dlnUnemRate4 dlnUnemRate6 dlnUnemRate7 dlnUnemRate9 
+ dlnLabFl5
+ dlnAllEmployeesl1 dlnAllEmployeesl2 dlnAllEmployeesl7

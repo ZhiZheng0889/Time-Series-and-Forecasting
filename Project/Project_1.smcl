@@ -1,0 +1,852 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}E:\Time Series\Project\Project_1.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 2 May 2022, 16:05:43
+{txt}
+{com}. 
+. *Import data from csv file.
+. import delimited "Project.csv"
+{res}{txt}(encoding automatically selected: UTF-8)
+{text}(9 vars, 266 obs)
+
+{com}. 
+. *Check to make sure data is imported.
+. describe
+
+{txt}Contains data
+ Observations:{res}           266                  
+{txt}    Variables:{res}             9                  
+{txt}{hline}
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+{hline}
+{p 0 48}{res}{bind:date           }{txt}{bind: str10   }{bind:{txt}%10s      }{space 1}{bind:         }{bind:  }{res}{res}DATE{p_end}
+{p 0 48}{bind:apus35b72610   }{txt}{bind: str5    }{bind:{txt}%9s       }{space 1}{bind:         }{bind:  }{res}{res}APUS35B72610{p_end}
+{p 0 48}{bind:apus35b74716   }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}APUS35B74716{p_end}
+{p 0 48}{bind:miam112lfn     }{txt}{bind: long    }{bind:{txt}%12.0g    }{space 1}{bind:         }{bind:  }{res}{res}MIAM112LFN{p_end}
+{p 0 48}{bind:miam112urn     }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}MIAM112URN{p_end}
+{p 0 48}{bind:smu123310005~01}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000001{p_end}
+{p 0 48}{bind:smu1233100050~2}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000002{p_end}
+{p 0 48}{bind:smu1233100050~3}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000003{p_end}
+{p 0 48}{bind:smu123310005~11}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000011{p_end}
+{txt}{hline}
+Sorted by: 
+{res}     Note: Dataset has changed since last saved.
+{txt}
+{com}. summarize
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}date {c |}{res}          0
+{txt}apus35b72610 {c |}{res}          0
+{txt}apus35b74716 {c |}{res}        266    2.885305    .7793685      1.356      4.352
+{txt}{space 2}miam112lfn {c |}{res}        266     2845569    207946.7    2475966    3193207
+{txt}{space 2}miam112urn {c |}{res}        266         5.5    2.565666        2.1       13.8
+{txt}{hline 13}{c +}{hline 57}
+smu123310~01 {c |}{res}        266    2084.412    183.9617     1834.6     2470.5
+{txt}smu1233100~2 {c |}{res}        182    35.06538    .5882454       32.3       36.3
+{txt}smu1233100~3 {c |}{res}        182    23.50538    1.898119      20.98       29.5
+{txt}smu123310~11 {c |}{res}        182    824.0697     66.1051     746.95    1029.55
+{txt}
+{com}. 
+. *Rename the four variables.
+. 
+. *Average Weekly Earnings of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000011 WeeklyWage
+{res}{txt}
+{com}. 
+. *Average Hourly Earnings of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000003 HourlyWage
+{res}{txt}
+{com}. 
+. *Average Weekly Hours of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000002 WeeklyHrs
+{res}{txt}
+{com}. 
+. *All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000001 AllEmployees
+{res}{txt}
+{com}. 
+. *Civilian Labor Force in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)  
+. rename  miam112lfn Labor_Force
+{res}{txt}
+{com}. 
+. *Unemployment Rate in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)  
+. rename miam112urn Unem_Rate
+{res}{txt}
+{com}. 
+. *Generate a monthly date variable (make its display format monthly time, %tm)
+. generate datestring=date(date,"YMD")
+{txt}
+{com}. gen datec = mofd(datestring)
+{txt}
+{com}. format datec %tm
+{txt}
+{com}. tsset datec
+{res}
+{p 0 15 2}{txt:Time variable: }{res:datec}{txt:, }{res:{bind:2000m1}}{txt: to }{res:{bind:2022m2}}{p_end}
+{txt}{col 9}Delta: {res}1 month
+{txt}
+{com}. 
+. keep if tin(2007m1,2022m2)
+{txt}(84 observations deleted)
+
+{com}. 
+. *add January 2020 to the data,
+. tsappend, add(1)
+{txt}
+{com}. gen month=month(dofm(datec))
+{txt}
+{com}. 
+. *Generate dummy month indicators
+. tabulate month, generate(m) 
+
+      {txt}month {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}         16        8.74        8.74
+{txt}          2 {c |}{res}         16        8.74       17.49
+{txt}          3 {c |}{res}         16        8.74       26.23
+{txt}          4 {c |}{res}         15        8.20       34.43
+{txt}          5 {c |}{res}         15        8.20       42.62
+{txt}          6 {c |}{res}         15        8.20       50.82
+{txt}          7 {c |}{res}         15        8.20       59.02
+{txt}          8 {c |}{res}         15        8.20       67.21
+{txt}          9 {c |}{res}         15        8.20       75.41
+{txt}         10 {c |}{res}         15        8.20       83.61
+{txt}         11 {c |}{res}         15        8.20       91.80
+{txt}         12 {c |}{res}         15        8.20      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        183      100.00
+{txt}
+{com}. 
+. 
+. *Generate natural logs of the variables to be used in the analysis
+. gen lnLabF=ln(Labor_Force)
+{txt}(1 missing value generated)
+
+{com}. 
+. gen lnUnemRate=ln(Unem_Rate)
+{txt}(1 missing value generated)
+
+{com}. 
+. gen lnAllEmployees=ln(AllEmployees)
+{txt}(1 missing value generated)
+
+{com}. 
+. gen lnWeeklyWage=ln(WeeklyWage)
+{txt}(1 missing value generated)
+
+{com}. 
+. gen lnHourlyWage=ln(HourlyWage)
+{txt}(1 missing value generated)
+
+{com}. 
+. gen lnWeeklyHrs=ln(WeeklyHrs)
+{txt}(1 missing value generated)
+
+{com}. 
+. /*
+> *tsline plots
+> tsline lnLabF, title("tsline lnLabF") saving("tsline1", replace) 
+> 
+> tsline lnUnemRate, title("tsline lnUnemRate") saving("tsline2", replace) 
+> 
+> tsline lnAllEmployees, title("tsline lnAllEmployees") saving("tsline3", replace) 
+> 
+> graph combine "tsline1" "tsline2" "tsline3", rows(2)
+> graph export "tsline1.emf", replace 
+> 
+> *AC
+> ac lnLabF, title("Autocorrelogram lnLabF") saving("ac1", replace) 
+> 
+> ac lnUnemRate, title("Autocorrelogram lnUnemRate") saving("ac2", replace) 
+> 
+> ac lnAllEmployees, title("Autocorrelogram lnAllEmployees") saving("ac3", replace) 
+> 
+> graph combine "ac1" "ac2" "ac3", rows(2) 
+> graph export "dependence1.emf", replace
+> 
+> 
+> *PAC
+> pac lnLabF, title("Partial Autocorrelogram lnLabF") saving("pac1", replace) 
+> 
+> pac lnUnemRate, title("Partial Autocorrelogram lnUnemRate") saving("pac2", replace) 
+> 
+> pac lnAllEmployees, title("Partial Autocorrelogram lnAllEmployees") saving("pac3", replace) 
+> 
+> graph combine "pac1" "pac2" "pac3", rows(2) 
+> graph export "dependence2.emf", replace
+> 
+> 
+> *Generate lags for vselect
+> gen dlnAllEmployees = d.lnAllEmployees
+> 
+> quietly forvalues i = 1/12 {c -(}
+>         gen dlnAllEmployeesl`i' = l`i'd.lnAllEmployees
+> {c )-}
+> 
+> quietly forvalues i = 1/12 {c -(}
+>         gen dlnLabFl`i'= l`i'd.lnLabF
+> {c )-}
+> 
+> quietly forvalues i = 1/12 {c -(}
+>         gen dlnUnemRate`i'= l`i'd.lnUnemRate
+> {c )-}
+> 
+> *Vselecting the models for Total Private Employee
+> vselect dlnAllEmployees dlnAllEmployeesl* dlnLabFl* dlnUnemRate*, best fix(m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12)
+> 
+> *Check LOOCV for them
+> scalar drop _all
+> 
+> reg d.lnAllEmployees l(1/12)d.lnAllEmployees m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+> estat ic // getting ic
+>                 scalar define df0=el(r(S),1,4) // saving model df
+>                 scalar define aic0=el(r(S),1,5) // saving aic
+>                 scalar define bic0=el(r(S),1,6) // saving bic
+> loocv reg d.lnAllEmployees l(12)d.lnAllEmployees m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+>                 scalar define loormse0=r(rmse)
+> 
+> reg d.lnAllEmployees l(1)d.lnAllEmployees l(1,8)d.lnUnemRate l(2)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+> estat ic // getting ic
+>                 scalar define df1=el(r(S),1,4) // saving model df
+>                 scalar define aic1=el(r(S),1,5) // saving aic
+>                 scalar define bic1=el(r(S),1,6) // saving bic
+> loocv reg d.lnAllEmployees l(1)d.lnAllEmployees l(1,8)d.lnUnemRate l(2)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+>                 scalar define loormse1=r(rmse)
+> 
+> reg d.lnAllEmployees l(1)d.lnAllEmployees l(1,8)d.lnUnemRate l(2, 6)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+> estat ic // getting ic
+>                 scalar define df2=el(r(S),1,4) // saving model df
+>                 scalar define aic2=el(r(S),1,5) // saving aic
+>                 scalar define bic2=el(r(S),1,6) // saving bic
+> loocv reg d.lnAllEmployees l(1)d.lnAllEmployees l(1,8)d.lnUnemRate l(2, 6)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+>                 scalar define loormse2=r(rmse)
+> 
+> reg d.lnAllEmployees l(1)d.lnAllEmployees l(1, 6, 8)d.lnUnemRate l(2, 5)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+> estat ic // getting ic
+>                 scalar define df3=el(r(S),1,4) // saving model df
+>                 scalar define aic3=el(r(S),1,5) // saving aic
+>                 scalar define bic3=el(r(S),1,6) // saving bic
+> loocv reg d.lnAllEmployees l(1)d.lnAllEmployees l(1, 6, 8)d.lnUnemRate l(2, 5)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+>                 scalar define loormse3=r(rmse)
+> 
+> reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 4)d.lnUnemRate l(5, 6)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+> estat ic // getting ic
+>                 scalar define df4=el(r(S),1,4) // saving model df
+>                 scalar define aic4=el(r(S),1,5) // saving aic
+>                 scalar define bic4=el(r(S),1,6) // saving bic
+> loocv reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 4)d.lnUnemRate l(5, 6)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+>                 scalar define loormse4=r(rmse)
+> 
+> reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 4, 9)d.lnUnemRate l(5, 6)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+> estat ic // getting ic
+>                 scalar define df5=el(r(S),1,4) // saving model df
+>                 scalar define aic5=el(r(S),1,5) // saving aic
+>                 scalar define bic5=el(r(S),1,6) // saving bic
+> loocv reg d.lnAllEmployees l(1)d.lnAllEmployees l(1, 2, 6, 8, 9)d.lnUnemRate l(2, 5)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+>                 scalar define loormse5=r(rmse)
+> 
+> reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 2, 4, 6, 9)d.lnUnemRate l(5)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+> estat ic // getting ic
+>                 scalar define df6=el(r(S),1,4) // saving model df
+>                 scalar define aic6=el(r(S),1,5) // saving aic
+>                 scalar define bic6=el(r(S),1,6) // saving bic
+> loocv reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 2, 6, 9)d.lnUnemRate l(5)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+>                 scalar define loormse6=r(rmse)  
+>                 
+> reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 2, 4, 6, 7, 9)d.lnUnemRate l(5)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+> estat ic // getting ic
+>                 scalar define df7=el(r(S),1,4) // saving model df
+>                 scalar define aic7=el(r(S),1,5) // saving aic
+>                 scalar define bic7=el(r(S),1,6) // saving bic
+> loocv reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 2, 4, 6, 7, 9)d.lnUnemRate l(5)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1, 2022m2)
+>                 scalar define loormse7=r(rmse)          
+> 
+> *Creating a comparision table
+> matrix drop _all
+> matrix fit0=(df0,aic0,bic0,loormse0)
+> matrix fit1=(df1,aic1,bic1,loormse1)
+> matrix fit2=(df2,aic2,bic2,loormse2)
+> matrix fit3=(df3,aic3,bic3,loormse3)
+> matrix fit4=(df4,aic4,bic4,loormse4)
+> matrix fit5=(df5,aic5,bic5,loormse5)
+> matrix fit6=(df6,aic6,bic6,loormse6)
+> matrix fit7=(df7,aic7,bic7,loormse7)
+> 
+> matrix FIT=fit0\fit1\fit2\fit3\fit4\fit5\fit6\fit7
+> matrix rownames FIT= "Model 12-Lag AR" "Model 4" "Model 5" "Model 6" "Model 7" "Model 8" "Model 9" "Model 10"
+> matrix colnames FIT=df AIC BIC LOOCV
+> matrix list FIT
+> 
+> summ datec if l12d.lnAllEmployees~=. & l9d.lnUnemRate~=. & l6d.lnLabF~=.
+> 
+> summ datec if datec==tm(2022m2)
+> 
+> *Rolling window program
+> scalar drop _all
+> quietly forval w=48(12)180 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=673/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+>         reg d.lnAllEmployees l(1/12)d.lnAllEmployees m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnAllEmployees)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // min obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width
+> 
+> *Rolling window program
+> scalar drop _all
+> quietly forval w=48(12)180 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=673/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+>         reg d.lnAllEmployees l(1)d.lnAllEmployees l(1,8)d.lnUnemRate l(2, 6)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnAllEmployees)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // in obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width
+> 
+> *Rolling window program
+> scalar drop _all
+> quietly forval w=48(12)180 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=673/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+> reg d.lnAllEmployees l(1)d.lnAllEmployees l(1, 6, 8)d.lnUnemRate l(2, 5)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnAllEmployees)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // in obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width
+> 
+> *Rolling window program
+> scalar drop _all
+> quietly forval w=48(12)180 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=673/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+>         reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 4)d.lnUnemRate l(5, 6)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnAllEmployees)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // in obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width
+> 
+> 
+> *Rolling window program
+> scalar drop _all
+> quietly forval w=48(12)180 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=673/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+>         reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 4, 9)d.lnUnemRate l(5, 6)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnAllEmployees)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // in obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width
+> 
+> /*
+> Model 12-Lag: RWrmse180 =  .03774197
+> Model 5: RWrmse180 =  .04004232
+> Model 6: RWrmse180 =  .04157896
+> Model 7: RWrmse180 =  .03921726
+> Model 8: RWrmse180 =  .03858189
+> */
+> 
+> */
+. 
+. 
+. *Rolling window program -- Inner Loop Only
+. 
+. *So, the obs to fit are now 493+180=581 to 745.
+. 
+. scalar drop _all
+{txt}
+{com}. gen pred=. // out of sample prediction
+{txt}(183 missing values generated)
+
+{com}. gen nobs=. // number of observations in the window for each forecast point              
+{txt}(183 missing values generated)
+
+{com}.         quietly forval t=673/745 {c -(} 
+{txt}
+{com}. **End of selected rolling window implementation
+. 
+. *Examine Error Distribution
+. gen res=d.lnAllEmployees-pred
+{txt}(110 missing values generated)
+
+{com}. hist res, frac normal saving(errhist, replace) scheme(s1mono)
+{txt}(bin={res}8{txt}, start={res}-.17064291{txt}, width={res}.0622145{txt})
+{res}{txt}file {bf:errhist.gph} saved
+
+{com}. swilk res
+
+                   {txt}Shapiro–Wilk W test for normal data
+
+    Variable {c |}        Obs{col 33}W{col 45}V{col 55}z       Prob>z
+{hline 13}{c +}{hline 54}
+         res {c |} {res}        73    0.46540     34.048     7.690    0.00000
+{txt}
+{com}. sktest res
+{res}
+{txt}Skewness and kurtosis tests for normality
+{col 58}{hline 5} Joint test {hline 5}
+{col 5}Variable {c |}{col 22}Obs   Pr(skewness)   Pr(kurtosis)   Adj chi2(2)  Prob>chi2
+{hline 13}{c +}{hline 65}
+         res {c |}{res}{col 16}       73{col 34}0.0000{col 49}0.0000{col 60}    70.29{col 74}0.0000
+{txt}
+{com}. 
+. /*Run model on last window of 180 months (15 years) 
+> to get most recent predictions and forecast*/ 
+. 
+. reg d.lnAllEmployees l(1, 2, 7)d.lnAllEmployees l(1, 4, 9)d.lnUnemRate l(5, 6)d.lnLabF m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m2,2022m2)
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       169
+{txt}{hline 13}{c +}{hline 34}   F(19, 149)      = {res}     7.26
+{txt}       Model {c |} {res} .024851066        19  .001307951   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  .02684008       149  .000180135   {txt}R-squared       ={res}    0.4808
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.4145
+{txt}       Total {c |} {res} .051691145       168  .000307685   {txt}Root MSE        =   {res} .01342
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}D.            {col 16}{c |}
+{col 1}lnAllEmployees{col 16}{c |} Coefficient{col 28}  Std. err.{col 40}      t{col 48}   P>|t|{col 56}     [95% con{col 69}f. interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+lnAllEmployees {c |}
+{space 11}LD. {c |}{col 16}{res}{space 2}-.7869814{col 28}{space 2} .1273511{col 39}{space 1}   -6.18{col 48}{space 3}0.000{col 56}{space 4}-1.038629{col 69}{space 3}-.5353338
+{txt}{space 10}L2D. {c |}{col 16}{res}{space 2} -.365541{col 28}{space 2} .0738575{col 39}{space 1}   -4.95{col 48}{space 3}0.000{col 56}{space 4}-.5114844{col 69}{space 3}-.2195976
+{txt}{space 10}L7D. {c |}{col 16}{res}{space 2} .2094836{col 28}{space 2}   .07328{col 39}{space 1}    2.86{col 48}{space 3}0.005{col 56}{space 4} .0646814{col 69}{space 3} .3542859
+{txt}{space 14} {c |}
+{space 4}lnUnemRate {c |}
+{space 11}LD. {c |}{col 16}{res}{space 2}-.1233595{col 28}{space 2} .0175223{col 39}{space 1}   -7.04{col 48}{space 3}0.000{col 56}{space 4}-.1579837{col 69}{space 3}-.0887352
+{txt}{space 10}L4D. {c |}{col 16}{res}{space 2} .0285487{col 28}{space 2}  .010055{col 39}{space 1}    2.84{col 48}{space 3}0.005{col 56}{space 4}   .00868{col 69}{space 3} .0484175
+{txt}{space 10}L9D. {c |}{col 16}{res}{space 2}-.0162332{col 28}{space 2}  .009581{col 39}{space 1}   -1.69{col 48}{space 3}0.092{col 56}{space 4}-.0351653{col 69}{space 3}  .002699
+{txt}{space 14} {c |}
+{space 8}lnLabF {c |}
+{space 10}L5D. {c |}{col 16}{res}{space 2}   .46171{col 28}{space 2} .1268236{col 39}{space 1}    3.64{col 48}{space 3}0.000{col 56}{space 4}  .211105{col 69}{space 3} .7123151
+{txt}{space 10}L6D. {c |}{col 16}{res}{space 2}-.3330877{col 28}{space 2} .1190009{col 39}{space 1}   -2.80{col 48}{space 3}0.006{col 56}{space 4} -.568235{col 69}{space 3}-.0979405
+{txt}{space 14} {c |}
+{space 12}m2 {c |}{col 16}{res}{space 2} .0126403{col 28}{space 2} .0056971{col 39}{space 1}    2.22{col 48}{space 3}0.028{col 56}{space 4} .0013829{col 69}{space 3} .0238978
+{txt}{space 12}m3 {c |}{col 16}{res}{space 2} .0045752{col 28}{space 2} .0057405{col 39}{space 1}    0.80{col 48}{space 3}0.427{col 56}{space 4}-.0067682{col 69}{space 3} .0159185
+{txt}{space 12}m4 {c |}{col 16}{res}{space 2} .0092004{col 28}{space 2} .0052825{col 39}{space 1}    1.74{col 48}{space 3}0.084{col 56}{space 4}-.0012379{col 69}{space 3} .0196386
+{txt}{space 12}m5 {c |}{col 16}{res}{space 2}-.0020125{col 28}{space 2}  .006232{col 39}{space 1}   -0.32{col 48}{space 3}0.747{col 56}{space 4} -.014327{col 69}{space 3}  .010302
+{txt}{space 12}m6 {c |}{col 16}{res}{space 2} .0068271{col 28}{space 2} .0056683{col 39}{space 1}    1.20{col 48}{space 3}0.230{col 56}{space 4}-.0043734{col 69}{space 3} .0180277
+{txt}{space 12}m7 {c |}{col 16}{res}{space 2} .0063025{col 28}{space 2} .0054767{col 39}{space 1}    1.15{col 48}{space 3}0.252{col 56}{space 4}-.0045196{col 69}{space 3} .0171245
+{txt}{space 12}m8 {c |}{col 16}{res}{space 2} .0151243{col 28}{space 2} .0055905{col 39}{space 1}    2.71{col 48}{space 3}0.008{col 56}{space 4} .0040774{col 69}{space 3} .0261713
+{txt}{space 12}m9 {c |}{col 16}{res}{space 2} .0003186{col 28}{space 2} .0058836{col 39}{space 1}    0.05{col 48}{space 3}0.957{col 56}{space 4}-.0113076{col 69}{space 3} .0119447
+{txt}{space 11}m10 {c |}{col 16}{res}{space 2} .0132041{col 28}{space 2} .0058136{col 39}{space 1}    2.27{col 48}{space 3}0.025{col 56}{space 4} .0017162{col 69}{space 3} .0246919
+{txt}{space 11}m11 {c |}{col 16}{res}{space 2} .0274406{col 28}{space 2} .0053615{col 39}{space 1}    5.12{col 48}{space 3}0.000{col 56}{space 4} .0168461{col 69}{space 3}  .038035
+{txt}{space 11}m12 {c |}{col 16}{res}{space 2}  .019683{col 28}{space 2} .0054655{col 39}{space 1}    3.60{col 48}{space 3}0.000{col 56}{space 4} .0088831{col 69}{space 3} .0304829
+{txt}{space 9}_cons {c |}{col 16}{res}{space 2}-.0077092{col 28}{space 2}  .004039{col 39}{space 1}   -1.91{col 48}{space 3}0.058{col 56}{space 4}-.0156903{col 69}{space 3} .0002719
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. predict pdlnAllEmployees if datec==tm(2022m3) // generate point forecast 
+{txt}(option {bf:xb} assumed; fitted values)
+(182 missing values generated)
+
+{com}. replace pdlnAllEmployees=pred if datec<tm(2022m3)
+{txt}(73 real changes made)
+
+{com}. 
+. *Normal Interval
+. gen ressq=res^2 // generating squared errors 
+{txt}(110 missing values generated)
+
+{com}. summ ressq // getting the mean of the squared errors 
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}ressq {c |}{res}         73    .0021393    .0129054   6.04e-09   .1069768
+{txt}
+{com}. 
+. *95% Interval
+. gen pAllEmployeesn=exp(pdlnAllEmployees+l.lnAllEmployees+0.5*r(mean)) 
+{txt}(109 missing values generated)
+
+{com}. gen ubAllEmployeesn=pAllEmployeesn*exp(1.96*r(mean)^0.5) 
+{txt}(109 missing values generated)
+
+{com}. gen lbAllEmployeesn=pAllEmployeesn*exp(-1.96*r(mean)^0.5) 
+{txt}(109 missing values generated)
+
+{com}. 
+. *90% Interval
+. gen ubAllEmployeesn90=pAllEmployeesn*exp(1.64*r(mean)^0.5)
+{txt}(109 missing values generated)
+
+{com}. gen lbAllEmployeesn90=pAllEmployeesn*exp(-1.64*r(mean)^0.5)
+{txt}(109 missing values generated)
+
+{com}. 
+. *99% Interval
+. gen ubAllEmployeesn99=pAllEmployeesn*exp(2.58*r(mean)^0.5)
+{txt}(109 missing values generated)
+
+{com}. gen lbAllEmployeesn99=pAllEmployeesn*exp(-2.58*r(mean)^0.5)
+{txt}(109 missing values generated)
+
+{com}. 
+. twoway (tsline ubAllEmployeesn lbAllEmployeesn pAllEmployeesn if tin(2015m1,2022m3)) ///
+>         (scatter AllEmployees datec if tin(2015m2,2020m1), ms(Oh) ) ///
+>         (scatter AllEmployees datec if tin(2020m2,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("AllEmployees") ///
+>         t2title("Rolling Window Forecast Interval (Normal)") legend(order(1 "ubAllEmployeesn1" ///
+>                 2 "lbAllEmployeesn1" 3 "pAllEmployeesn1" 4 "ubAllEmployeesn2" 5 "lbAllEmployeesn2" 6 "pAllEmployeesn2" 7 "AllEmployees") holes(2) )
+{res}{txt}
+{com}.         graph save AllEmployeesn.gph, replace
+{res}{txt}file {bf:AllEmployeesn.gph} saved
+
+{com}.         
+. twoway (tsline ubAllEmployeesn90 pAllEmployeesn lbAllEmployeesn90 if tin(2018m1,2022m3)) /// 
+>  (scatter AllEmployees datec if tin(2018m1,2022m2), ms(+) ) /// 
+>  (scatter pAllEmployees datec if tin(2020m3,2020m3), ms(oh) ) , /// 
+>  scheme(s1mono) title("AllEmployees 90% (Normal)") legend(off) 
+{res}{txt}
+{com}. graph save AllEmployeesn90.gph, replace 
+{res}{txt}file {bf:AllEmployeesn90.gph} saved
+
+{com}. 
+. twoway (tsline ubAllEmployeesn99 pAllEmployeesn lbAllEmployeesn99 if tin(2018m1,2022m3)) /// 
+>  (scatter AllEmployees datec if tin(2018m1,2022m2), ms(+) ) /// 
+>  (scatter pAllEmployees datec if tin(2020m3,2020m3), ms(oh) ) , /// 
+>  scheme(s1mono) title("AllEmployees 99% (Normal)") legend(off)
+{res}{txt}
+{com}. graph save AllEmployeesn99.gph, replace 
+{res}{txt}file {bf:AllEmployeesn99.gph} saved
+
+{com}. 
+. *Empirical Interval
+. gen experr=exp(res)
+{txt}(110 missing values generated)
+
+{com}. summ experr // mean is the multiplicative correction factor
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 6}experr {c |}{res}         73    1.004441    .0518199   .8431226   1.386903
+{txt}
+{com}. 
+. gen pAllEmployeese=r(mean)*exp(l.lnAllEmployees+pdlnAllEmployees)
+{txt}(109 missing values generated)
+
+{com}. 
+. *95% Interval
+. _pctile experr, percentile(2.5,97.5) //  corrections for the bounds
+{txt}
+{com}. return list
+
+{txt}scalars:
+                 r(r1) =  {res}.9619914293289185
+                 {txt}r(r2) =  {res}1.058232665061951
+{txt}
+{com}. 
+. gen lbAllEmployeese=pAllEmployeese*r(r1)
+{txt}(109 missing values generated)
+
+{com}. gen ubAllEmployeese=pAllEmployeese*r(r2)
+{txt}(109 missing values generated)
+
+{com}. 
+. *90% Interval
+. _pctile experr, percentile(5,95) //  corrections for the bounds 
+{txt}
+{com}. return list 
+
+{txt}scalars:
+                 r(r1) =  {res}.9716238379478455
+                 {txt}r(r2) =  {res}1.042845249176025
+{txt}
+{com}. 
+. gen lbAllEmployeese90=r(r1)*pAllEmployeese 
+{txt}(109 missing values generated)
+
+{com}. gen ubAllEmployeese90=r(r2)*pAllEmployeese 
+{txt}(109 missing values generated)
+
+{com}. 
+. *99% Interval
+. _pctile experr, percentile(.5,99.5) //  corrections for the bounds 
+{txt}
+{com}. return list 
+
+{txt}scalars:
+                 r(r1) =  {res}.8431226015090942
+                 {txt}r(r2) =  {res}1.386902809143066
+{txt}
+{com}. 
+. gen lbAllEmployeese99=r(r1)*pAllEmployeese 
+{txt}(109 missing values generated)
+
+{com}. gen ubAllEmployeese99=r(r2)*pAllEmployeese 
+{txt}(109 missing values generated)
+
+{com}.  
+. twoway (tsline ubAllEmployeese lbAllEmployeese pAllEmployeese if tin(2015m1,2022m3)) ///
+>         (scatter AllEmployees datec if tin(2015m1,2022m2), ms(Oh) ) ///
+>         (scatter AllEmployees datec if tin(2022m3,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("All Employees") ///
+>         t2title("Rolling Window Forecast Interval (Empirical)") legend(order(1 "ubAllEmployeesn1" ///
+>                 2 "lbAllEmployeesn1" 3 "pAllEmployeesn1" 4 "ubAllEmployeesn2" 5 "lbAllEmployeesn2" 6 "pAllEmployeesn2" 7 "AllEmployees") holes(2) )
+{res}{txt}
+{com}.         graph save AllEmployeese.gph, replace
+{res}{txt}file {bf:AllEmployeese.gph} saved
+
+{com}.         
+. twoway (tsline ubAllEmployeese90 lbAllEmployeese90 pAllEmployeese if tin(2015m1,2022m3)) ///
+>         (scatter AllEmployees datec if tin(2015m1,2022m2), ms(Oh) ) ///
+>         (scatter AllEmployees datec if tin(2022m3,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("All Employees") ///
+>         t2title("Rolling Window Forecast Interval (Empirical)") legend(order(1 "ubAllEmployeesn1" ///
+>                 2 "lbAllEmployeesn1" 3 "pAllEmployeesn1" 4 "ubAllEmployeesn2" 5 "lbAllEmployeesn2" 6 "pAllEmployeesn2" 7 "AllEmployees") holes(2) )
+{res}{txt}
+{com}.         graph save AllEmployeese90.gph, replace
+{res}{txt}file {bf:AllEmployeese90.gph} saved
+
+{com}.         
+. twoway (tsline ubAllEmployeese99 lbAllEmployeese99 pAllEmployeese if tin(2015m1,2022m3)) ///
+>         (scatter AllEmployees datec if tin(2015m1,2022m2), ms(Oh) ) ///
+>         (scatter AllEmployees datec if tin(2022m3,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("All Employees") ///
+>         t2title("Rolling Window Forecast Interval (Empirical)") legend(order(1 "ubAllEmployeesn1" ///
+>                 2 "lbAllEmployeesn1" 3 "pAllEmployeesn1" 4 "ubAllEmployeesn2" 5 "lbAllEmployeesn2" 6 "pAllEmployeesn2" 7 "AllEmployees") holes(2) )
+{res}{txt}
+{com}.         graph save AllEmployeese99.gph, replace
+{res}{txt}file {bf:AllEmployeese99.gph} saved
+
+{com}.         
+.         *Compare normal and empirical bounds
+. twoway (scatter AllEmployees datec, ms(Oh) ) ///
+>         (tsline lbAllEmployeesn ubAllEmployeesn lbAllEmployeese ubAllEmployeese, ///
+>                 lpattern( solid solid "-###" "-###") /// 
+>         lcolor(gs8%40 gs8%40 gs1 gs1) ///
+>         lwidth(vthick vthick thick thick) ) ///
+>         if tin(2020m1,2022m3) , tline(`=scalar(break)') scheme(s1mono) ///
+>         ylabel( , grid) xlabel( , grid) ///
+>         title("Miami-Fort Lauderdale-West Palm Beach AllEmployees") ///
+>         t2title("95% Forecast Interval Comparison") ///
+>         legend(order(1 "Actual" ///
+>                 2 "Normal Bounds" 4 "Empirical Bounds" ) holes(2) )
+{err}break not found
+{res}{txt}
+{com}.         graph save AllEmployeesCombined.gph, replace
+{res}{txt}file {bf:AllEmployeesCombined.gph} saved
+
+{com}.         
+. twoway (scatter AllEmployees datec, ms(Oh) ) ///
+>         (tsline lbAllEmployeesn90 ubAllEmployeesn90 lbAllEmployeese90 ubAllEmployeese90, ///
+>                 lpattern( solid solid "-###" "-###") /// 
+>         lcolor(gs8%40 gs8%40 gs1 gs1) ///
+>         lwidth(vthick vthick thick thick) ) ///
+>         if tin(2020m1,2022m3) , tline(`=scalar(break)') scheme(s1mono) ///
+>         ylabel( , grid) xlabel( , grid) ///
+>         title("Miami-Fort Lauderdale-West Palm Beach AllEmployees") ///
+>         t2title("90% Forecast Interval Comparison") ///
+>         legend(order(1 "Actual" ///
+>                 2 "Normal Bounds" 4 "Empirical Bounds" ) holes(2) )
+{err}break not found
+{res}{txt}
+{com}.         graph save AllEmployeesCombined90.gph, replace
+{res}{txt}file {bf:AllEmployeesCombined90.gph} saved
+
+{com}.         
+. twoway (scatter AllEmployees datec, ms(Oh) ) ///
+>         (tsline lbAllEmployeesn99 ubAllEmployeesn99 lbAllEmployeese99 ubAllEmployeese99, ///
+>                 lpattern( solid solid "-###" "-###") /// 
+>         lcolor(gs8%40 gs8%40 gs1 gs1) ///
+>         lwidth(vthick vthick thick thick) ) ///
+>         if tin(2020m1,2022m3) , tline(`=scalar(break)') scheme(s1mono) ///
+>         ylabel( , grid) xlabel( , grid) ///
+>         title("Miami-Fort Lauderdale-West Palm Beach AllEmployees") ///
+>         t2title("99% Forecast Interval Comparison") ///
+>         legend(order(1 "Actual" ///
+>                 2 "Normal Bounds" 4 "Empirical Bounds" ) holes(2) )
+{err}break not found
+{res}{txt}
+{com}.         graph save AllEmployeesCombined99.gph, replace
+{res}{txt}file {bf:AllEmployeesCombined99.gph} saved
+
+{com}. 
+. list lbAllEmployeesn pAllEmployeesn ubAllEmployeesn lbAllEmployeese pAllEmployeese ubAllEmployeese if datec==tm(2022m3)
+{txt}
+     {c TLC}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c TRC}
+     {c |} {res}lbAllE~n   pAllEm~n   ubAllE~n   lbAllE~e   pAllEm~e   ubAllE~e {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+183. {c |} {res}2253.463   2467.298   2701.423   2381.511   2475.606   2619.767 {txt}{c |}
+     {c BLC}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c BRC}
+
+{com}. 
+. Stop
+{err}command {bf}Stop{sf} is unrecognized
+{txt}{search r(199), local:r(199);}
+
+end of do-file
+
+{search r(199), local:r(199);}
+
+{com}. save "E:\Time Series\Project\Project1.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\Time Series\Project\Project1.dta{rm}
+saved
+{p_end}
+
+{com}. exit

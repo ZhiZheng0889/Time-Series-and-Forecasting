@@ -1,0 +1,23 @@
+1  :  dlnWeeklyWagel3
+
+2  :  dlnWeeklyWagel1 dlnWeeklyWagel2 
+
+3  :  dlnWeeklyWagel1 dlnWeeklyWagel2 dlnWeeklyWagel10 
+
+4  :  dlnWeeklyWagel1 dlnWeeklyWagel2 dlnWeeklyWagel9 dlnWeeklyWagel10 
+
+5  :   dlnWeeklyWagel1 dlnWeeklyWagel2 
+ dlnWeeklyHrsl9 dlnWeeklyHrsl11 
+dlnHourlyWagel10
+
+6  :  dlnWeeklyWagel1 dlnWeeklyWagel2 
+dlnWeeklyHrsl6 dlnWeeklyHrsl9 dlnWeeklyHrsl11 
+dlnHourlyWagel10
+
+7  :  dlnWeeklyWagel2 dlnWeeklyWagel1 dlnWeeklyWagel5 dlnWeeklyWagel6 
+dlnWeeklyHrsl9 dlnWeeklyHrsl11 
+dlnHourlyWagel10
+
+8  :  dlnWeeklyWagel1 dlnWeeklyWagel2 dlnWeeklyWagel5 dlnWeeklyWagel6 
+dlnHourlyWagel7 dlnHourlyWagel10 
+dlnWeeklyHrsl9 dlnWeeklyHrsl11

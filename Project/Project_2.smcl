@@ -1,0 +1,863 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}E:\Time Series\Project\Project_2.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 2 May 2022, 16:05:58
+{txt}
+{com}. 
+. *Import data from csv file.
+. import delimited "Project_Monthly.txt"
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{text}(12 vars, 266 obs)
+
+{com}. 
+. *Check to make sure data is imported.
+. describe
+
+{txt}Contains data
+ Observations:{res}           266                  
+{txt}    Variables:{res}            12                  
+{txt}{hline}
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+{hline}
+{p 0 48}{res}{bind:date           }{txt}{bind: str10   }{bind:{txt}%10s      }{space 1}{bind:         }{bind:  }{res}{res}DATE{p_end}
+{p 0 48}{bind:apus35b72610   }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}APUS35B72610{p_end}
+{p 0 48}{bind:apus35b74716   }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}APUS35B74716{p_end}
+{p 0 48}{bind:miam112lfn     }{txt}{bind: long    }{bind:{txt}%12.0g    }{space 1}{bind:         }{bind:  }{res}{res}MIAM112LFN{p_end}
+{p 0 48}{bind:miam112urn     }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}MIAM112URN{p_end}
+{p 0 48}{bind:smu123310005~01}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000001{p_end}
+{p 0 48}{bind:smu1233100050~2}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000002{p_end}
+{p 0 48}{bind:smu1233100050~3}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000003{p_end}
+{p 0 48}{bind:smu123310005~11}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000011{p_end}
+{p 0 48}{bind:v10            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:v11            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:v12            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{txt}{hline}
+Sorted by: 
+{res}     Note: Dataset has changed since last saved.
+{txt}
+{com}. summarize
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}date {c |}{res}          0
+{txt}apus35b72610 {c |}{res}        265     .112083    .0133757        .08       .164
+{txt}apus35b74716 {c |}{res}        266    2.885305    .7793685      1.356      4.352
+{txt}{space 2}miam112lfn {c |}{res}        266     2845569    207946.7    2475966    3193207
+{txt}{space 2}miam112urn {c |}{res}        266         5.5    2.565666        2.1       13.8
+{txt}{hline 13}{c +}{hline 57}
+smu123310~01 {c |}{res}        266    2084.412    183.9617     1834.6     2470.5
+{txt}smu1233100~2 {c |}{res}        182    35.06538    .5882454       32.3       36.3
+{txt}smu1233100~3 {c |}{res}        182    23.50538    1.898119      20.98       29.5
+{txt}smu123310~11 {c |}{res}        182    824.0697     66.1051     746.95    1029.55
+{txt}{space 9}v10 {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 9}v11 {c |}{res}          0
+{txt}{space 9}v12 {c |}{res}          0
+{txt}
+{com}. 
+. *Rename the four variables.
+. 
+. *Average Weekly Earnings of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000011 WeeklyWage
+{res}{txt}
+{com}. 
+. *Average Hourly Earnings of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000003 HourlyWage
+{res}{txt}
+{com}. 
+. *Average Weekly Hours of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000002 WeeklyHrs
+{res}{txt}
+{com}. 
+. *All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000001 AllEmployees
+{res}{txt}
+{com}. 
+. *Average Price: Electricity per Kilowatt-Hour in Miami-Fort Lauderdale-West Palm Beach, FL (CBSA)
+. rename apus35b72610 Average_Price_Elec
+{res}{txt}
+{com}. 
+. *Average Price: Gasoline, Unleaded Premium (Cost per Gallon/3.785 Liters) in Miami-Fort Lauderdale-West Palm Beach, FL (CBSA)
+. rename apus35b74716 Average_Price_Gas
+{res}{txt}
+{com}. 
+. *Civilian Labor Force in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)  
+. rename  miam112lfn Labor_Force
+{res}{txt}
+{com}. 
+. *Unemployment Rate in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)  
+. rename miam112urn Unem_Rate
+{res}{txt}
+{com}. 
+. *Generate a monthly date variable (make its display format monthly time, %tm)
+. generate datestring=date(date,"YMD")
+{txt}
+{com}. gen datec = mofd(datestring)
+{txt}
+{com}. format datec %tm
+{txt}
+{com}. tsset datec
+{res}
+{p 0 15 2}{txt:Time variable: }{res:datec}{txt:, }{res:{bind:2000m1}}{txt: to }{res:{bind:2022m2}}{p_end}
+{txt}{col 9}Delta: {res}1 month
+{txt}
+{com}. 
+. keep if tin(,2022m2)
+{txt}(0 observations deleted)
+
+{com}. 
+. *add January 2020 to the data,
+. tsappend, add(1)
+{txt}
+{com}. gen month=month(dofm(datec))
+{txt}
+{com}. 
+. *Generate dummy month indicators
+. tabulate month, generate(m)
+
+      {txt}month {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}         23        8.61        8.61
+{txt}          2 {c |}{res}         23        8.61       17.23
+{txt}          3 {c |}{res}         23        8.61       25.84
+{txt}          4 {c |}{res}         22        8.24       34.08
+{txt}          5 {c |}{res}         22        8.24       42.32
+{txt}          6 {c |}{res}         22        8.24       50.56
+{txt}          7 {c |}{res}         22        8.24       58.80
+{txt}          8 {c |}{res}         22        8.24       67.04
+{txt}          9 {c |}{res}         22        8.24       75.28
+{txt}         10 {c |}{res}         22        8.24       83.52
+{txt}         11 {c |}{res}         22        8.24       91.76
+{txt}         12 {c |}{res}         22        8.24      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        267      100.00
+{txt}
+{com}. 
+. *Generate natural logs of the variables to be used in the analysis
+. gen lnWeeklyWage=ln(WeeklyWage)
+{txt}(85 missing values generated)
+
+{com}. 
+. gen lnHourlyWage=ln(HourlyWage)
+{txt}(85 missing values generated)
+
+{com}. 
+. gen lnWeeklyHrs=ln(WeeklyHrs)
+{txt}(85 missing values generated)
+
+{com}. 
+. /*
+> *tsline plots
+> tsline lnWeeklyWage, title("tsline lnWeeklyWage") saving("tsline4", replace) 
+> 
+> tsline lnHourlyWage, title("tsline lnHourlyWage") saving("tsline5", replace) 
+> 
+> tsline lnWeeklyHrs, title("tsline lnWeeklyHrs") saving("tsline6", replace) 
+> 
+> graph combine "tsline4" "tsline5" "tsline6", rows(2) 
+> graph export "tsline2.emf", replace
+> 
+> *AC
+> ac lnWeeklyWage, title("Autocorrelogram lnWeeklyWage") saving("ac4", replace) 
+> 
+> ac lnHourlyWage, title("Autocorrelogram lnHourlyWage") saving("ac5", replace) 
+> 
+> ac lnWeeklyHrs, title("Autocorrelogram lnWeeklyHrs") saving("ac6", replace) 
+> 
+> graph combine "ac4" "ac5" "ac6", rows(2) 
+> graph export "dependence3.emf", replace
+> 
+> *PAC
+> pac lnWeeklyWage, title("Partial Autocorrelogram lnWeeklyWage") saving("pac4", replace) 
+> 
+> pac lnHourlyWage, title("Partial Autocorrelogram lnHourlyWage") saving("pac5", replace) 
+> 
+> pac lnWeeklyHrs, title("Partial Autocorrelogram lnWeeklyHrs") saving("pac6", replace) 
+> 
+> graph combine "pac4" "pac5" "pac6", rows(2) 
+> graph export "dependence4.emf", replace
+> 
+> 
+> *Generate lags for vselect
+> gen dlnWeeklyWage = d.lnWeeklyWage
+> 
+> quietly forvalues i = 1/12 {c -(}
+>         gen dlnHourlyWagel`i'= l`i'd.lnHourlyWage
+> {c )-}
+> 
+> quietly forvalues i = 1/12 {c -(}
+>         gen dlnWeeklyHrsl`i'= l`i'd.lnWeeklyHrs
+> {c )-}
+> 
+> quietly forvalues i = 1/12 {c -(}
+>         gen dlnWeeklyWagel`i'= l`i'd.lnWeeklyWage
+> {c )-}
+> 
+> 
+> *Vselecting the models for WeeklyWage
+> vselect dlnWeeklyWage dlnWeeklyWagel* dlnHourlyWagel*  dlnWeeklyHrsl*, best fix( m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12)
+> 
+> *Check LOOCV for them
+> scalar drop _all
+> 
+> reg d.lnWeeklyWage l(1/12)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+> estat ic // getting ic
+>                 scalar define df1=el(r(S),1,4) // saving model df
+>                 scalar define aic1=el(r(S),1,5) // saving aic
+>                 scalar define bic1=el(r(S),1,6) // saving bic
+> loocv reg d.lnWeeklyWage l(12)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+>                 scalar define loormse1=r(rmse)
+> 
+> reg d.lnWeeklyWage l(3)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+> estat ic // getting ic
+>                 scalar define df2=el(r(S),1,4) // saving model df
+>                 scalar define aic2=el(r(S),1,5) // saving aic
+>                 scalar define bic2=el(r(S),1,6) // saving bic
+> loocv reg d.lnWeeklyWage l(3)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+>                 scalar define loormse2=r(rmse)
+>         
+> reg d.lnWeeklyWage l(1, 2)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+> estat ic // getting ic
+>                 scalar define df3=el(r(S),1,4) // saving model df
+>                 scalar define aic3=el(r(S),1,5) // saving aic
+>                 scalar define bic3=el(r(S),1,6) // saving bic
+> loocv reg d.lnWeeklyWage l(1, 2)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+>                 scalar define loormse3=r(rmse)
+>         
+> reg d.lnWeeklyWage l(1, 2, 10)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+> estat ic // getting ic
+>                 scalar define df4=el(r(S),1,4) // saving model df
+>                 scalar define aic4=el(r(S),1,5) // saving aic
+>                 scalar define bic4=el(r(S),1,6) // saving bic
+> loocv reg d.lnWeeklyWage l(1, 2, 10)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+>                 scalar define loormse4=r(rmse)
+> 
+> reg d.lnWeeklyWage l(1, 2, 9 , 10)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+> estat ic // getting ic
+>                 scalar define df5=el(r(S),1,4) // saving model df
+>                 scalar define aic5=el(r(S),1,5) // saving aic
+>                 scalar define bic5=el(r(S),1,6) // saving bic
+> loocv reg d.lnWeeklyWage l(1, 2, 9, 10)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+>                 scalar define loormse5=r(rmse)
+>                 
+> reg d.lnWeeklyWage l(1, 2)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+> estat ic // getting ic
+>                 scalar define df6=el(r(S),1,4) // saving model df
+>                 scalar define aic6=el(r(S),1,5) // saving aic
+>                 scalar define bic6=el(r(S),1,6) // saving bic
+> loocv reg d.lnWeeklyWage l(1, 2)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+>                 scalar define loormse6=r(rmse)
+> 
+> reg d.lnWeeklyWage l(1, 2)d.lnWeeklyWage l(6, 9, 11)d.lnWeeklyHrs l(10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+> estat ic // getting ic
+>                 scalar define df7=el(r(S),1,4) // saving model df
+>                 scalar define aic7=el(r(S),1,5) // saving aic
+>                 scalar define bic7=el(r(S),1,6) // saving bic
+> loocv reg d.lnWeeklyWage l(1, 2)d.lnWeeklyWage l(6, 9, 11)d.lnWeeklyHrs l(10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+>                 scalar define loormse7=r(rmse)
+>                 
+> reg d.lnWeeklyWage l(1, 2, 5, 6)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+> estat ic // getting ic
+>                 scalar define df8=el(r(S),1,4) // saving model df
+>                 scalar define aic8=el(r(S),1,5) // saving aic
+>                 scalar define bic8=el(r(S),1,6) // saving bic
+> loocv reg d.lnWeeklyWage l(1, 2, 5, 6)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+>                 scalar define loormse8=r(rmse)
+>                 
+> reg d.lnWeeklyWage l(1, 2, 5, 6)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(7, 10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+> estat ic // getting ic
+>                 scalar define df9=el(r(S),1,4) // saving model df
+>                 scalar define aic9=el(r(S),1,5) // saving aic
+>                 scalar define bic9=el(r(S),1,6) // saving bic
+> loocv reg d.lnWeeklyWage l(1, 2, 5, 6)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(7, 10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2008m1,2022m2)
+>                 scalar define loormse9=r(rmse)
+> 
+> *Creating a comparision table
+> matrix drop _all
+> matrix fit1=(df1,aic1,bic1,loormse1)
+> matrix fit2=(df2,aic2,bic2,loormse2)
+> matrix fit3=(df3,aic3,bic3,loormse3)
+> matrix fit4=(df4,aic4,bic4,loormse4)
+> matrix fit5=(df5,aic5,bic5,loormse5)
+> matrix fit6=(df6,aic6,bic6,loormse6)
+> matrix fit7=(df7,aic7,bic7,loormse7)
+> matrix fit8=(df8,aic8,bic8,loormse8)
+> matrix fit9=(df9,aic9,bic9,loormse9)
+> 
+> matrix FIT=fit1\fit2\fit3\fit4\fit5\fit6\fit7\fit8\fit9
+> matrix rownames FIT= "Model 12-Lag AR" "Model 1" "Model 2" "Model 3" "Model 4" "Model 5" "Model 6" "Model 7" "Model 8"
+> matrix colnames FIT=df AIC BIC LOOCV
+> matrix list FIT
+> 
+> summ datec if l12d.lnWeeklyWage~=. & l11d.lnWeeklyHrs~=. & l10d.lnHourlyWage~=.
+> 
+> summ datec if datec==tm(2022m2)
+> 
+> scalar drop _all
+> quietly forval w=48(12)144 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=721/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+>         reg d.lnWeeklyWage l(1/12)d.lnWeeklyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnWeeklyWage)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // min obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width if datec==tm(2022m2)
+> 
+> scalar drop _all
+> quietly forval w=48(12)144 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=721/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+>         reg d.lnWeeklyWage l(1, 2)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnWeeklyWage)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // min obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width if datec==tm(2022m2)
+> 
+> scalar drop _all
+> quietly forval w=48(12)144 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=721/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+>         reg d.lnWeeklyWage l(1, 2)d.lnWeeklyWage l(6, 9, 11)d.lnWeeklyHrs l(10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnWeeklyWage)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // min obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width if datec==tm(2022m2)
+> 
+> scalar drop _all
+> quietly forval w=48(12)144 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=721/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+>         reg d.lnWeeklyWage l(1, 2, 5, 6)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnWeeklyWage)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // min obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width if datec==tm(2022m2)
+> 
+> scalar drop _all
+> quietly forval w=48(12)144 {c -(} 
+> /* w=small(inc)large
+> small is the smallest window
+> inc is the window size increment
+> large is the largest window.
+> (large-small)/inc must be an interger */
+> gen pred=. // out of sample prediction
+> gen nobs=. // number of observations in the window for each forecast point              
+>         forval t=721/745 {c -(} 
+>         /* t=first/last
+>         first is the first date for which you want to make a forecast.
+>         first-1 is the end date of the earliest window used to fit the model.
+>         first-w, where w is the window width, is the date of the first
+>         observation used to fit the model in the earliest window.
+>         You must choose first so it is preceded by a full set of
+>     lags for the model with the longest lag length to be estimated.
+>         last is  the last observation to be forecast. */
+>         gen wstart=`t'-`w' // fit window start date
+>         gen wend=`t'-1 // fit window end date
+>         /* Enter the regression command immediately below.
+>         Leave the if statement intact to control the window  */
+>         reg d.lnWeeklyWage l(1, 2, 5, 6)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(7, 10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>                 if datec>=wstart & datec<=wend // restricts the model to the window
+>         replace nobs=e(N) if datec==`t' // number of observations used
+>         predict ptemp // temporary predicted values
+>         replace pred=ptemp if datec==`t' // saving the single forecast value
+>         drop ptemp wstart wend // clear these to prepare for the next loop
+>         {c )-}
+> gen errsq=(pred-d.lnWeeklyWage)^2 // generating squared errors
+> summ errsq // getting the mean of the squared errors
+> scalar RWrmse`w'=r(mean)^.5 // getting the rmse for window width i
+> summ nobs // getting min and max obs used
+> scalar RWminobs`w'=r(min) // min obs used in the window width
+> scalar RWmaxobs`w'=r(max) // max obs used in the window width
+> drop errsq pred nobs // clearing for the next loop
+> {c )-}
+> scalar list // list the RMSE and min and max obs for each window width if datec==tm(2022m2)
+> 
+> /*
+> Model 12-Lag: RWrmse132 =  .01332579
+> Model 5: RWrmse72 = .01285895
+> Model 6: RWrmse72 = .01334716
+> Model 7: RWrmse72 = .01295601
+> Model 8: RWrmse72 = .01278424
+> */
+> 
+> */
+. *Rolling window program -- Inner Loop Only
+. 
+. *So, the obs to fit are now 493+180=581 to 745.
+. 
+. scalar drop _all
+{txt}
+{com}. gen pred=. // out of sample prediction
+{txt}(267 missing values generated)
+
+{com}. gen nobs=. // number of observations in the window for each forecast point              
+{txt}(267 missing values generated)
+
+{com}.         quietly forval t=673/745 {c -(} 
+{txt}
+{com}. **End of selected rolling window implementation
+. 
+. *Examine Error Distribution
+. gen res=d.lnWeeklyWage-pred  
+{txt}(194 missing values generated)
+
+{com}. hist res, frac normal saving(errhist2, replace) scheme(s1mono)
+{txt}(bin={res}8{txt}, start={res}-.02859622{txt}, width={res}.0072284{txt})
+{res}{txt}file {bf:errhist2.gph} saved
+
+{com}. swilk res
+
+                   {txt}Shapiro–Wilk W test for normal data
+
+    Variable {c |}        Obs{col 33}W{col 45}V{col 55}z       Prob>z
+{hline 13}{c +}{hline 54}
+         res {c |} {res}        73    0.99375      0.398    -2.007    0.97762
+{txt}
+{com}. sktest res
+{res}
+{txt}Skewness and kurtosis tests for normality
+{col 58}{hline 5} Joint test {hline 5}
+{col 5}Variable {c |}{col 22}Obs   Pr(skewness)   Pr(kurtosis)   Adj chi2(2)  Prob>chi2
+{hline 13}{c +}{hline 65}
+         res {c |}{res}{col 16}       73{col 34}0.5035{col 49}0.8787{col 60}     0.48{col 74}0.7870
+{txt}
+{com}. 
+. /*Run model on last window of 72 months (6 years) 
+> to get most recent predictions and forecast*/ 
+. reg d.lnWeeklyWage l(1, 2, 5, 6)d.lnWeeklyWage l(9, 11)d.lnWeeklyHrs l(7, 10)d.lnHourlyWage m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12 ///
+>         if tin(2017m2,2022m2)
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}        61
+{txt}{hline 13}{c +}{hline 34}   F(19, 41)       = {res}     3.40
+{txt}       Model {c |} {res} .008932779        19  .000470146   {txt}Prob > F        ={res}    0.0005
+{txt}    Residual {c |} {res}  .00567227        41  .000138348   {txt}R-squared       ={res}    0.6116
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.4316
+{txt}       Total {c |} {res} .014605049        60  .000243417   {txt}Root MSE        =   {res} .01176
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}D.          {col 14}{c |}
+{col 1}lnWeeklyWage{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+lnWeeklyWage {c |}
+{space 9}LD. {c |}{col 14}{res}{space 2}-.5511667{col 26}{space 2}  .129799{col 37}{space 1}   -4.25{col 46}{space 3}0.000{col 54}{space 4}-.8133011{col 67}{space 3}-.2890322
+{txt}{space 8}L2D. {c |}{col 14}{res}{space 2}-.4887498{col 26}{space 2} .1385908{col 37}{space 1}   -3.53{col 46}{space 3}0.001{col 54}{space 4}-.7686397{col 67}{space 3}-.2088599
+{txt}{space 8}L5D. {c |}{col 14}{res}{space 2} .1006807{col 26}{space 2} .1368171{col 37}{space 1}    0.74{col 46}{space 3}0.466{col 54}{space 4}-.1756271{col 67}{space 3} .3769884
+{txt}{space 8}L6D. {c |}{col 14}{res}{space 2} .1121592{col 26}{space 2} .1310186{col 37}{space 1}    0.86{col 46}{space 3}0.397{col 54}{space 4}-.1524383{col 67}{space 3} .3767566
+{txt}{space 12} {c |}
+{space 1}lnWeeklyHrs {c |}
+{space 8}L9D. {c |}{col 14}{res}{space 2} .1126246{col 26}{space 2} .1214973{col 37}{space 1}    0.93{col 46}{space 3}0.359{col 54}{space 4}-.1327442{col 67}{space 3} .3579934
+{txt}{space 7}L11D. {c |}{col 14}{res}{space 2} .2869692{col 26}{space 2} .1167229{col 37}{space 1}    2.46{col 46}{space 3}0.018{col 54}{space 4} .0512425{col 67}{space 3}  .522696
+{txt}{space 12} {c |}
+lnHourlyWage {c |}
+{space 8}L7D. {c |}{col 14}{res}{space 2} .2592664{col 26}{space 2} .1493541{col 37}{space 1}    1.74{col 46}{space 3}0.090{col 54}{space 4}-.0423603{col 67}{space 3} .5608932
+{txt}{space 7}L10D. {c |}{col 14}{res}{space 2}-.1694602{col 26}{space 2} .1602092{col 37}{space 1}   -1.06{col 46}{space 3}0.296{col 54}{space 4}-.4930094{col 67}{space 3} .1540889
+{txt}{space 12} {c |}
+{space 10}m2 {c |}{col 14}{res}{space 2} .0115008{col 26}{space 2} .0090324{col 37}{space 1}    1.27{col 46}{space 3}0.210{col 54}{space 4}-.0067405{col 67}{space 3}  .029742
+{txt}{space 10}m3 {c |}{col 14}{res}{space 2}-.0073127{col 26}{space 2}   .00805{col 37}{space 1}   -0.91{col 46}{space 3}0.369{col 54}{space 4}-.0235701{col 67}{space 3} .0089446
+{txt}{space 10}m4 {c |}{col 14}{res}{space 2} .0081322{col 26}{space 2} .0084912{col 37}{space 1}    0.96{col 46}{space 3}0.344{col 54}{space 4}-.0090162{col 67}{space 3} .0252806
+{txt}{space 10}m5 {c |}{col 14}{res}{space 2} .0002674{col 26}{space 2} .0080405{col 37}{space 1}    0.03{col 46}{space 3}0.974{col 54}{space 4}-.0159708{col 67}{space 3} .0165056
+{txt}{space 10}m6 {c |}{col 14}{res}{space 2} .0009581{col 26}{space 2} .0085775{col 37}{space 1}    0.11{col 46}{space 3}0.912{col 54}{space 4}-.0163645{col 67}{space 3} .0182806
+{txt}{space 10}m7 {c |}{col 14}{res}{space 2} .0033654{col 26}{space 2} .0089657{col 37}{space 1}    0.38{col 46}{space 3}0.709{col 54}{space 4}-.0147413{col 67}{space 3}  .021472
+{txt}{space 10}m8 {c |}{col 14}{res}{space 2} .0122641{col 26}{space 2}  .008243{col 37}{space 1}    1.49{col 46}{space 3}0.144{col 54}{space 4}-.0043831{col 67}{space 3} .0289112
+{txt}{space 10}m9 {c |}{col 14}{res}{space 2}-.0039747{col 26}{space 2} .0080977{col 37}{space 1}   -0.49{col 46}{space 3}0.626{col 54}{space 4}-.0203283{col 67}{space 3} .0123789
+{txt}{space 9}m10 {c |}{col 14}{res}{space 2} .0052396{col 26}{space 2} .0084164{col 37}{space 1}    0.62{col 46}{space 3}0.537{col 54}{space 4}-.0117576{col 67}{space 3} .0222368
+{txt}{space 9}m11 {c |}{col 14}{res}{space 2}-.0039734{col 26}{space 2}  .009159{col 37}{space 1}   -0.43{col 46}{space 3}0.667{col 54}{space 4}-.0224705{col 67}{space 3} .0145236
+{txt}{space 9}m12 {c |}{col 14}{res}{space 2} .0198346{col 26}{space 2} .0081022{col 37}{space 1}    2.45{col 46}{space 3}0.019{col 54}{space 4}  .003472{col 67}{space 3} .0361973
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}  .001987{col 26}{space 2}  .006359{col 37}{space 1}    0.31{col 46}{space 3}0.756{col 54}{space 4}-.0108553{col 67}{space 3} .0148292
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. predict pdlnWeeklyWage if datec==tm(2022m3) // generate point forecast
+{txt}(option {bf:xb} assumed; fitted values)
+(266 missing values generated)
+
+{com}.  // generate point forecast 
+. replace pdlnWeeklyWage=pred if datec<tm(2022m3)
+{txt}(73 real changes made)
+
+{com}. 
+. *Normal Interval
+. gen ressq=res^2 // generating squared errors 
+{txt}(194 missing values generated)
+
+{com}. summ ressq // getting the mean of the squared errors 
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}ressq {c |}{res}         73    .0001466    .0001867   2.40e-07   .0008545
+{txt}
+{com}. gen pWeeklyWagen=exp(pdlnWeeklyWage+l.lnWeeklyWage+0.5*r(mean))
+{txt}(193 missing values generated)
+
+{com}. 
+. *95% Interval 
+. gen ubWeeklyWagen=pWeeklyWagen*exp(1.96*r(mean)^0.5) 
+{txt}(193 missing values generated)
+
+{com}. gen lbWeeklyWagen=pWeeklyWagen*exp(-1.96*r(mean)^0.5) 
+{txt}(193 missing values generated)
+
+{com}. 
+. *90% Interval
+. gen ubWeeklyWagen90=pWeeklyWagen*exp(1.64*r(mean)^0.5)
+{txt}(193 missing values generated)
+
+{com}. gen lbWeeklyWagen90=pWeeklyWagen*exp(-1.64*r(mean)^0.5)
+{txt}(193 missing values generated)
+
+{com}. 
+. *99% Interval
+. gen ubWeeklyWagen99=pWeeklyWagen*exp(2.58*r(mean)^0.5)
+{txt}(193 missing values generated)
+
+{com}. gen lbWeeklyWagen99=pWeeklyWagen*exp(-2.58*r(mean)^0.5)
+{txt}(193 missing values generated)
+
+{com}. 
+. *Graphing the intervals
+. twoway (tsline ubWeeklyWagen lbWeeklyWagen pWeeklyWagen if tin(2017m2,2022m3)) ///
+>         (scatter WeeklyWage datec if tin(2017m2,2020m1), ms(Oh) ) ///
+>         (scatter WeeklyWage datec if tin(2020m2,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("Average Weekly Wage") ///
+>         t2title("Rolling Window Forecast Interval (Normal)") legend(order(1 "ubWeeklyWagen1" ///
+>                 2 "lbWeeklyWagen1" 3 "pWeeklyWagen1" 4 "ubWeeklyWagen2" 5 "lbWeeklyWagen2" 6 "pWeeklyWagen2" 7 "WeeklyWage") holes(2) )
+{res}{txt}
+{com}.         graph save WeeklyWagen.gph, replace
+{res}{txt}file {bf:WeeklyWagen.gph} saved
+
+{com}. 
+. twoway (tsline ubWeeklyWagen90 lbWeeklyWagen90 pWeeklyWagen if tin(2017m2,2022m3)) ///
+>         (scatter WeeklyWage datec if tin(2017m2,2020m1), ms(Oh) ) ///
+>         (scatter WeeklyWage datec if tin(2020m2,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("Average Weekly Wage") ///
+>         t2title("Rolling Window Forecast Interval (Normal)") legend(order(1 "ubWeeklyWagen1" ///
+>                 2 "lbWeeklyWagen1" 3 "pWeeklyWagen1" 4 "ubWeeklyWagen2" 5 "lbWeeklyWagen2" 6 "pWeeklyWagen2" 7 "WeeklyWage") holes(2) )
+{res}{txt}
+{com}.         graph save WeeklyWagen90.gph, replace
+{res}{txt}file {bf:WeeklyWagen90.gph} saved
+
+{com}.         
+. twoway (tsline ubWeeklyWagen99 lbWeeklyWagen99 pWeeklyWagen if tin(2017m2,2022m3)) ///
+>         (scatter WeeklyWage datec if tin(2017m2,2020m1), ms(Oh) ) ///
+>         (scatter WeeklyWage datec if tin(2020m2,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("Average Weekly Wage") ///
+>         t2title("Rolling Window Forecast Interval (Normal)") legend(order(1 "ubWeeklyWagen1" ///
+>                 2 "lbWeeklyWagen1" 3 "pWeeklyWagen1" 4 "ubWeeklyWagen2" 5 "lbWeeklyWagen2" 6 "pWeeklyWagen2" 7 "WeeklyWage") holes(2) )
+{res}{txt}
+{com}.         graph save WeeklyWagen99.gph, replace
+{res}{txt}file {bf:WeeklyWagen99.gph} saved
+
+{com}. 
+. *Empirical Interval
+. gen experr=exp(res)
+{txt}(194 missing values generated)
+
+{com}. summ experr // mean is the multiplicative correction factor
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 6}experr {c |}{res}         73     1.00365    .0116782   .9718088   1.029662
+{txt}
+{com}. 
+. gen pWeeklyWagee=r(mean)*exp(l.lnWeeklyWage+pdlnWeeklyWage)
+{txt}(193 missing values generated)
+
+{com}. 
+. *95% Interval
+. _pctile experr, percentile(2.5,97.5) //  corrections for the bounds
+{txt}
+{com}. return list
+
+{txt}scalars:
+                 r(r1) =  {res}.9816916584968567
+                 {txt}r(r2) =  {res}1.025489449501038
+{txt}
+{com}. 
+. gen lbWeeklyWagee=pWeeklyWagee*r(r1)
+{txt}(193 missing values generated)
+
+{com}. gen ubWeeklyWagee=pWeeklyWagee*r(r2)
+{txt}(193 missing values generated)
+
+{com}. 
+. *90% Interval
+. _pctile experr, percentile(5,95) //  corrections for the bounds 
+{txt}
+{com}. return list 
+
+{txt}scalars:
+                 r(r1) =  {res}.98403000831604
+                 {txt}r(r2) =  {res}1.022963762283325
+{txt}
+{com}. 
+. gen lbWeeklyWagee90=r(r1)*pWeeklyWagee
+{txt}(193 missing values generated)
+
+{com}. gen ubWeeklyWagee90=r(r2)*pWeeklyWagee
+{txt}(193 missing values generated)
+
+{com}. 
+. *99% Interval
+. _pctile experr, percentile(.5,99.5) //  corrections for the bounds 
+{txt}
+{com}. return list 
+
+{txt}scalars:
+                 r(r1) =  {res}.9718087911605835
+                 {txt}r(r2) =  {res}1.029662370681763
+{txt}
+{com}. 
+. gen lbWeeklyWagee99=r(r1)*pWeeklyWagee
+{txt}(193 missing values generated)
+
+{com}. gen ubWeeklyWagee99=r(r2)*pWeeklyWagee 
+{txt}(193 missing values generated)
+
+{com}. 
+. 
+. twoway (tsline ubWeeklyWagee lbWeeklyWagee pWeeklyWagee if tin(2015m1,2022m3)) ///
+>         (scatter WeeklyWage datec if tin(2017m2,2022m2), ms(Oh) ) ///
+>         (scatter WeeklyWage datec if tin(2022m3,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("Average Weekly Wage") ///
+>         t2title("Rolling Window Forecast Interval (Empirical)") legend(order(1 "ubWeeklyWagen1" ///
+>                 2 "lbWeeklyWagen1" 3 "pWeeklyWagen1" 4 "ubWeeklyWagen2" 5 "lbWeeklyWagen2" 6 "pWeeklyWagen2" 7 "WeeklyWage") holes(2) )
+{res}{txt}
+{com}.         graph save WeeklyWagee.gph, replace
+{res}{txt}file {bf:WeeklyWagee.gph} saved
+
+{com}.         
+. twoway (tsline ubWeeklyWagee90 lbWeeklyWagee90 pWeeklyWagee if tin(2015m1,2022m3)) ///
+>         (scatter WeeklyWage datec if tin(2017m2,2022m2), ms(Oh) ) ///
+>         (scatter WeeklyWage datec if tin(2022m3,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("Average Weekly Wage") ///
+>         t2title("Rolling Window Forecast Interval (Empirical)") legend(order(1 "ubWeeklyWagen1" ///
+>                 2 "lbWeeklyWagen1" 3 "pWeeklyWagen1" 4 "ubWeeklyWagen2" 5 "lbWeeklyWagen2" 6 "pWeeklyWagen2" 7 "WeeklyWage") holes(2) )
+{res}{txt}
+{com}.         graph save WeeklyWagee90.gph, replace
+{res}{txt}file {bf:WeeklyWagee90.gph} saved
+
+{com}.         
+. twoway (tsline ubWeeklyWagee99 lbWeeklyWagee99 pWeeklyWagee if tin(2015m1,2022m3)) ///
+>         (scatter WeeklyWage datec if tin(2017m2,2022m2), ms(Oh) ) ///
+>         (scatter WeeklyWage datec if tin(2022m3,2022m3), ms(T) ) , ///
+>         scheme(s1mono) title("Average Weekly Wage") ///
+>         t2title("Rolling Window Forecast Interval (Empirical)") legend(order(1 "ubWeeklyWagen1" ///
+>                 2 "lbWeeklyWagen1" 3 "pWeeklyWagen1" 4 "ubWeeklyWagen2" 5 "lbWeeklyWagen2" 6 "pWeeklyWagen2" 7 "WeeklyWage") holes(2) )
+{res}{txt}
+{com}.         graph save WeeklyWagee99.gph, replace
+{res}{txt}file {bf:WeeklyWagee99.gph} saved
+
+{com}.         
+. *Compare normal and empirical bounds
+. twoway (scatter WeeklyWage datec, ms(Oh) ) ///
+>         (tsline lbWeeklyWagen ubWeeklyWagen lbWeeklyWagee ubWeeklyWagee, ///
+>                 lpattern( solid solid "-###" "-###") /// 
+>         lcolor(gs8%40 gs8%40 gs1 gs1) ///
+>         lwidth(vthick vthick thick thick) ) ///
+>         if tin(2020m1,2022m3) , tline(`=scalar(break)') scheme(s1mono) ///
+>         ylabel( , grid) xlabel( , grid) ///
+>         title("Miami-Fort Lauderdale-West Palm Beach WeeklyWage") ///
+>         t2title("95% Forecast Interval Comparison") ///
+>         legend(order(1 "Actual" ///
+>                 2 "Normal Bounds" 4 "Empirical Bounds" ) holes(2) )
+{err}break not found
+{res}{txt}
+{com}.         graph save WeeklyWageCombined.gph, replace
+{res}{txt}file {bf:WeeklyWageCombined.gph} saved
+
+{com}.         
+. twoway (scatter WeeklyWage datec, ms(Oh) ) ///
+>         (tsline lbWeeklyWagen90 ubWeeklyWagen90 lbWeeklyWagee90 ubWeeklyWagee90, ///
+>                 lpattern( solid solid "-###" "-###") /// 
+>         lcolor(gs8%40 gs8%40 gs1 gs1) ///
+>         lwidth(vthick vthick thick thick) ) ///
+>         if tin(2020m1,2022m3) , tline(`=scalar(break)') scheme(s1mono) ///
+>         ylabel( , grid) xlabel( , grid) ///
+>         title("Miami-Fort Lauderdale-West Palm Beach WeeklyWage") ///
+>         t2title("90% Forecast Interval Comparison") ///
+>         legend(order(1 "Actual" ///
+>                 2 "Normal Bounds" 4 "Empirical Bounds" ) holes(2) )
+{err}break not found
+{res}{txt}
+{com}.         graph save WeeklyWageCombined90.gph, replace
+{res}{txt}file {bf:WeeklyWageCombined90.gph} saved
+
+{com}.         
+. twoway (scatter WeeklyWage datec, ms(Oh) ) ///
+>         (tsline lbWeeklyWagen99 ubWeeklyWagen99 lbWeeklyWagee99 ubWeeklyWagee99, ///
+>                 lpattern( solid solid "-###" "-###") /// 
+>         lcolor(gs8%40 gs8%40 gs1 gs1) ///
+>         lwidth(vthick vthick thick thick) ) ///
+>         if tin(2020m1,2022m3) , tline(`=scalar(break)') scheme(s1mono) ///
+>         ylabel( , grid) xlabel( , grid) ///
+>         title("Miami-Fort Lauderdale-West Palm Beach WeeklyWage") ///
+>         t2title("99% Forecast Interval Comparison") ///
+>         legend(order(1 "Actual" ///
+>                 2 "Normal Bounds" 4 "Empirical Bounds" ) holes(2) )
+{err}break not found
+{res}{txt}
+{com}.         graph save WeeklyWageCombined99.gph, replace
+{res}{txt}file {bf:WeeklyWageCombined99.gph} saved
+
+{com}. 
+. list lbWeeklyWagen pWeeklyWagen ubWeeklyWagen lbWeeklyWagee pWeeklyWagee ubWeeklyWagee if datec==tm(2022m3)
+{txt}
+     {c TLC}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c TRC}
+     {c |} {res}lbWeek~n   pWeekl~n   ubWeek~n   lbWeek~e   pWeekl~e   ubWeek~e {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+267. {c |} {res}994.6629    1018.55    1043.01   1003.478   1022.193   1048.248 {txt}{c |}
+     {c BLC}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c BRC}
+
+{com}. 
+. Stop
+{err}command {bf}Stop{sf} is unrecognized
+{txt}{search r(199), local:r(199);}
+
+end of do-file
+
+{search r(199), local:r(199);}
+
+{com}. save "E:\Time Series\Project\Project2.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\Time Series\Project\Project2.dta{rm}
+saved
+{p_end}
+
+{com}. exit

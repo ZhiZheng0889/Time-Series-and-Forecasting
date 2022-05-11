@@ -1,0 +1,535 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}E:\Time Series\Project\Project.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}11 Apr 2022, 18:27:39
+{txt}
+{com}. 
+. *Import data from csv file.
+. import delimited "Project_Monthly.txt"
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{text}(12 vars, 266 obs)
+
+{com}. 
+. *Check to make sure data is imported.
+. describe
+
+{txt}Contains data
+ Observations:{res}           266                  
+{txt}    Variables:{res}            12                  
+{txt}{hline}
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+{hline}
+{p 0 48}{res}{bind:date           }{txt}{bind: str10   }{bind:{txt}%10s      }{space 1}{bind:         }{bind:  }{res}{res}DATE{p_end}
+{p 0 48}{bind:apus35b72610   }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}APUS35B72610{p_end}
+{p 0 48}{bind:apus35b74716   }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}APUS35B74716{p_end}
+{p 0 48}{bind:miam112lfn     }{txt}{bind: long    }{bind:{txt}%12.0g    }{space 1}{bind:         }{bind:  }{res}{res}MIAM112LFN{p_end}
+{p 0 48}{bind:miam112urn     }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}MIAM112URN{p_end}
+{p 0 48}{bind:smu123310005~01}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000001{p_end}
+{p 0 48}{bind:smu1233100050~2}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000002{p_end}
+{p 0 48}{bind:smu1233100050~3}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000003{p_end}
+{p 0 48}{bind:smu123310005~11}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000011{p_end}
+{p 0 48}{bind:v10            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:v11            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:v12            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{txt}{hline}
+Sorted by: 
+{res}     Note: Dataset has changed since last saved.
+{txt}
+{com}. summarize
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}date {c |}{res}          0
+{txt}apus35b72610 {c |}{res}        265     .112083    .0133757        .08       .164
+{txt}apus35b74716 {c |}{res}        266    2.885305    .7793685      1.356      4.352
+{txt}{space 2}miam112lfn {c |}{res}        266     2845569    207946.7    2475966    3193207
+{txt}{space 2}miam112urn {c |}{res}        266         5.5    2.565666        2.1       13.8
+{txt}{hline 13}{c +}{hline 57}
+smu123310~01 {c |}{res}        266    2084.412    183.9617     1834.6     2470.5
+{txt}smu1233100~2 {c |}{res}        182    35.06538    .5882454       32.3       36.3
+{txt}smu1233100~3 {c |}{res}        182    23.50538    1.898119      20.98       29.5
+{txt}smu123310~11 {c |}{res}        182    824.0697     66.1051     746.95    1029.55
+{txt}{space 9}v10 {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 9}v11 {c |}{res}          0
+{txt}{space 9}v12 {c |}{res}          0
+{txt}
+{com}. 
+. *Rename the four variables.
+. 
+. *Average Weekly Earnings of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000011 WeeklyWage
+{res}{txt}
+{com}. 
+. *Average Hourly Earnings of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000003 HourlyWage
+{res}{txt}
+{com}. 
+. *Average Weekly Hours of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000002 WeeklyHrs
+{res}{txt}
+{com}. 
+. *All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000001 AllEmployees
+{res}{txt}
+{com}. 
+. *Average Price: Electricity per Kilowatt-Hour in Miami-Fort Lauderdale-West Palm Beach, FL (CBSA)
+. rename apus35b72610 Average_Price_Elec
+{res}{txt}
+{com}. 
+. *Average Price: Gasoline, Unleaded Premium (Cost per Gallon/3.785 Liters) in Miami-Fort Lauderdale-West Palm Beach, FL (CBSA)
+. rename apus35b74716 Average_Price_Gas
+{res}{txt}
+{com}. 
+. *Civilian Labor Force in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)  
+. rename  miam112lfn Labor_Force
+{res}{txt}
+{com}. 
+. *Unemployment Rate in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)  
+. rename miam112urn Unem_Rate
+{res}{txt}
+{com}. 
+. 
+. 
+. *Generate a monthly date variable (make its display format monthly time, %tm)
+. generate datestring=date(date,"YMD")
+{txt}
+{com}. 
+. format datestring %td
+{txt}
+{com}. 
+. gen month=month(datestring)
+{txt}
+{com}. gen year=year(datestring)
+{txt}
+{com}. 
+. gen monthly=ym(year, month)
+{txt}
+{com}. 
+. format monthly %tm 
+{txt}
+{com}. 
+. tsset monthly
+{res}
+{p 0 15 2}{txt:Time variable: }{res:monthly}{txt:, }{res:{bind:2000m1}}{txt: to }{res:{bind:2022m2}}{p_end}
+{txt}{col 9}Delta: {res}1 month
+{txt}
+{com}. 
+. *Generate dummy month indicators
+. tabulate month, generate(m) 
+
+      {txt}month {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}         23        8.65        8.65
+{txt}          2 {c |}{res}         23        8.65       17.29
+{txt}          3 {c |}{res}         22        8.27       25.56
+{txt}          4 {c |}{res}         22        8.27       33.83
+{txt}          5 {c |}{res}         22        8.27       42.11
+{txt}          6 {c |}{res}         22        8.27       50.38
+{txt}          7 {c |}{res}         22        8.27       58.65
+{txt}          8 {c |}{res}         22        8.27       66.92
+{txt}          9 {c |}{res}         22        8.27       75.19
+{txt}         10 {c |}{res}         22        8.27       83.46
+{txt}         11 {c |}{res}         22        8.27       91.73
+{txt}         12 {c |}{res}         22        8.27      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        266      100.00
+{txt}
+{com}. 
+. *Generate natural logs of the variables to be used in the analysis
+. gen lnAPE=ln(Average_Price_Elec)
+{txt}(1 missing value generated)
+
+{com}. 
+. gen lnAPG=ln(Average_Price_Gas)
+{txt}
+{com}. 
+. gen lnLabF=ln(Labor_Force)
+{txt}
+{com}. 
+. gen lnUnemRate=ln(Unem_Rate)
+{txt}
+{com}. 
+. gen lnAllEmployees=ln(AllEmployees)
+{txt}
+{com}. 
+. gen lnWeeklyWage=ln(WeeklyWage)
+{txt}(84 missing values generated)
+
+{com}. 
+. gen lnHourlyWage=ln(HourlyWage)
+{txt}(84 missing values generated)
+
+{com}. 
+. gen lnWeeklyHrs=ln(WeeklyHrs)
+{txt}(84 missing values generated)
+
+{com}. 
+. 
+. *tsline plots
+. tsline lnAPE, title("tsline lnAPE") saving("tsline1", replace) 
+{res}{txt}file {bf:tsline1.gph} saved
+
+{com}. 
+. tsline lnAPG, title("tsline lnAPG") saving("tsline2", replace) 
+{res}{txt}file {bf:tsline2.gph} saved
+
+{com}. 
+. tsline lnLabF, title("tsline lnLabF") saving("tsline3", replace) 
+{res}{txt}file {bf:tsline3.gph} saved
+
+{com}. 
+. tsline lnUnemRate, title("tsline lnUnemRate") saving("tsline4", replace) 
+{res}{txt}file {bf:tsline4.gph} saved
+
+{com}. 
+. tsline lnAllEmployees, title("tsline lnAllEmployees") saving("tsline5", replace) 
+{res}{txt}file {bf:tsline5.gph} saved
+
+{com}. 
+. tsline lnWeeklyWage, title("tsline lnWeeklyWage") saving("tsline6", replace) 
+{res}{txt}file {bf:tsline6.gph} saved
+
+{com}. 
+. tsline lnHourlyWage, title("tsline lnHourlyWage") saving("tsline7", replace) 
+{res}{txt}file {bf:tsline7.gph} saved
+
+{com}. 
+. tsline lnWeeklyHrs, title("tsline lnWeeklyHrs") saving("tsline8", replace) 
+{res}{txt}file {bf:tsline8.gph} saved
+
+{com}. 
+. graph combine "tsline1" "tsline2" "tsline3" "tsline4", rows(2)
+{res}{txt}
+{com}. graph export "tsline1.emf", replace 
+{txt}{p 0 4 2}
+file {bf}
+E:\Time Series\Project\tsline1.emf{rm}
+saved as
+Enhanced Metafile
+format
+{p_end}
+
+{com}. graph combine "tsline5" "tsline6" "tsline7" "tsline8", rows(2) 
+{res}{txt}
+{com}. graph export "tsline2.emf", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\Time Series\Project\tsline2.emf{rm}
+saved as
+Enhanced Metafile
+format
+{p_end}
+
+{com}. 
+. *AC
+. ac lnAPE, title("Autocorrelogram lnAPE") saving("ac1", replace) 
+{txt}(note: time series has 1 gap)
+{res}{txt}file {bf:ac1.gph} saved
+
+{com}. 
+. ac lnAPG, title("Autocorrelogram lnAPG") saving("ac2", replace) 
+{res}{txt}file {bf:ac2.gph} saved
+
+{com}. 
+. ac lnLabF, title("Autocorrelogram lnLabF") saving("ac3", replace) 
+{res}{txt}file {bf:ac3.gph} saved
+
+{com}. 
+. ac lnUnemRate, title("Autocorrelogram lnUnemRate") saving("ac4", replace) 
+{res}{txt}file {bf:ac4.gph} saved
+
+{com}. 
+. ac lnAllEmployees, title("Autocorrelogram lnAllEmployees") saving("ac5", replace) 
+{res}{txt}file {bf:ac5.gph} saved
+
+{com}. 
+. ac lnWeeklyWage, title("Autocorrelogram lnWeeklyWage") saving("ac6", replace) 
+{res}{txt}file {bf:ac6.gph} saved
+
+{com}. 
+. ac lnHourlyWage, title("Autocorrelogram lnHourlyWage") saving("ac7", replace) 
+{res}{txt}file {bf:ac7.gph} saved
+
+{com}. 
+. ac lnWeeklyHrs, title("Autocorrelogram lnWeeklyHrs") saving("ac8", replace) 
+{res}{txt}file {bf:ac8.gph} saved
+
+{com}. 
+. graph combine "ac1" "ac2" "ac3" "ac4", rows(2) 
+{res}{txt}
+{com}. graph export "dependence1.emf", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\Time Series\Project\dependence1.emf{rm}
+saved as
+Enhanced Metafile
+format
+{p_end}
+
+{com}. 
+. graph combine "ac5" "ac6" "ac7" "ac8", rows(2) 
+{res}{txt}
+{com}. graph export "dependence2.emf", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\Time Series\Project\dependence2.emf{rm}
+saved as
+Enhanced Metafile
+format
+{p_end}
+
+{com}. 
+. *PAC
+. 
+. pac lnAPE, title("Partial Autocorrelogram lnAPE") saving("pac1", replace) 
+{txt}(note: time series has 1 gap)
+{res}{txt}file {bf:pac1.gph} saved
+
+{com}. 
+. pac lnAPG, title("Partial Autocorrelogram lnAPG") saving("pac2", replace) 
+{res}{txt}file {bf:pac2.gph} saved
+
+{com}. 
+. pac lnLabF, title("Partial Autocorrelogram lnLabF") saving("pac3", replace) 
+{res}{txt}file {bf:pac3.gph} saved
+
+{com}. 
+. pac lnUnemRate, title("Partial Autocorrelogram lnUnemRate") saving("pac4", replace) 
+{res}{txt}file {bf:pac4.gph} saved
+
+{com}. 
+. pac lnAllEmployees, title("Partial Autocorrelogram lnAllEmployees") saving("pac5", replace) 
+{res}{txt}file {bf:pac5.gph} saved
+
+{com}. 
+. pac lnWeeklyWage, title("Partial Autocorrelogram lnWeeklyWage") saving("pac6", replace) 
+{res}{txt}file {bf:pac6.gph} saved
+
+{com}. 
+. pac lnHourlyWage, title("Partial Autocorrelogram lnHourlyWage") saving("pac7", replace) 
+{res}{txt}file {bf:pac7.gph} saved
+
+{com}. 
+. pac lnWeeklyHrs, title("Partial Autocorrelogram lnWeeklyHrs") saving("pac8", replace) 
+{res}{txt}file {bf:pac8.gph} saved
+
+{com}. 
+. */
+. 
+. graph combine "pac1" "pac2" "pac3" "pac4", rows(2) 
+{res}{txt}
+{com}. graph export "dependence3.emf", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\Time Series\Project\dependence3.emf{rm}
+saved as
+Enhanced Metafile
+format
+{p_end}
+
+{com}. 
+. graph combine "pac5" "pac6" "pac7" "pac8", rows(2) 
+{res}{txt}
+{com}. graph export "dependence4.emf", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\Time Series\Project\dependence4.emf{rm}
+saved as
+Enhanced Metafile
+format
+{p_end}
+
+{com}. 
+. *Generate lags for vselect
+. gen dlnAllEmployees = d.lnAllEmployees
+{txt}(1 missing value generated)
+
+{com}. gen dlnWeeklyWage = d.lnWeeklyWage
+{txt}(85 missing values generated)
+
+{com}. 
+. quietly forvalues i = 1/ 4{c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/4 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/4 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/4 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/4 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/4 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/4 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/4 {c -(}
+{txt}
+{com}. 
+. *Vselecting the models for Total Private Employee
+. vselect dlnAllEmployees dlnAllEmployeesl*  dlnWeeklyWagel*  dlnWeeklyHrsl* dlnLabFl* dlnUnemRate*  dlnAPEl* dlnAPGl*, best fix(m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12)
+{txt}{p 0 4 2}94{txt} observations containing missing predictor values{p_end}
+
+
+Response :             {res}dlnAllEmployees
+{txt}Fixed predictors :     {res}m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12
+{txt}Selected predictors:  {res} dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnLabFl1 dlnWeeklyHrsl4 dlnWeeklyWagel1 dlnWeeklyHrsl1 dlnWeeklyWagel4 dlnAPEl2 dlnAPGl3 dlnAPGl2 dlnUnemRate3
+
+{text}Optimal models: {result}
+
+   # Preds     R2ADJ         C       AIC      AICC       BIC
+ {result}        1 {text} .2457463 {text} 41.22946 {text}-939.6671 {text}-936.9919 {text}-898.7497
+ {result}        2 {text} .2841934 {text} 32.56817 {text}-947.7511 {text}-944.6742 {text}-903.6862
+ {result}        3 {text} .3634854 {text} 14.01546 {text}-967.0364 {text}-963.5268 {result} -919.824
+ {result}        4 {text} .3696336 {text} 13.52436 {text}-967.8049 {text}-963.8309 {text} -917.445
+ {result}        5 {text} .3790564 {text} 12.26004 {text}-969.5015 {text}-965.0309 {text}-915.9941
+ {result}        6 {text} .3888764 {text} 10.92963 {text}-971.3567 {text}-966.3567 {text}-914.7018
+ {result}        7 {text} .3947705 {text} 10.56767 {text}-972.1441 {text}-966.5812 {text}-912.3417
+ {result}        8 {text} .4005966 {text} 10.24022 {text}-972.9357 {text}-966.7757 {text}-909.9858
+ {result}        9 {text} .4064675 {text} 9.920403 {result} -973.764 {result}-966.9721 {text}-907.6667
+ {result}       10 {text}  .409035 {text} 10.39253 {text}-973.6525 {text}-966.1931 {text}-904.4077
+ {result}       11 {result} .4100664 {text}    11.23 {text}-973.1035 {text}-964.9402 {text}-900.7111
+ {result}       12 {text} .4085473 {text} 12.65998 {text}-971.8194 {text}-962.9153 {text}-896.2795
+ {result}       13 {text} .4084595 {text} 13.75675 {text}  -970.96 {text}-961.2772 {text}-892.2726
+ {result}       14 {text} .4064804 {text} 15.28435 {text}-969.5595 {text}-959.0595 {text}-887.7247
+ {result}       15 {text} .4032857 {text} 17.08094 {text}-967.8184 {text}-956.4617 {text} -882.836
+ {result}       16 {text} .4012888 {text} 18.59827 {text} -966.434 {text}-954.1805 {text}-878.3042
+ {result}       17 {text} .3991652 {text} 20.13765 {text}-965.0237 {text}-951.8322 {text}-873.7463
+ {result}       18 {text} .3962584 {text} 21.84404 {text}-963.4006 {text}-949.2291 {text}-868.9757
+ {result}       19 {text} .3939302 {text}   23.414 {text}-961.9541 {text}-946.7599 {text}-864.3818
+ {result}       20 {text} .3917679 {text} 24.94041 {text}-960.5657 {text}-944.3049 {text}-859.8459
+ {result}       21 {text} .3900296 {text} 26.36805 {text}-959.3079 {text}-941.9356 {text}-855.4406
+ {result}       22 {text} .3861982 {text} 28.24122 {text}-957.4728 {text}-938.9433 {text}-850.4579
+ {result}       23 {text} .3820831 {text} 30.16311 {text}-955.5744 {text} -935.841 {text}-845.4121
+ {result}       24 {text} .3780055 {text}  32.0642 {text}-953.7031 {text}-932.7181 {text}-840.3933
+ {result}       25 {text} .3736202 {text} 34.01738 {text}-951.7641 {text}-929.4784 {text}-835.3068
+ {result}       26 {text} .3689718 {text} 36.01192 {text}-949.7712 {text}-926.1349 {text}-830.1665
+ {result}       27 {text} .3642732 {text} 38.00238 {text}-947.7837 {text}-922.7455 {text}-825.0314
+ {result}       28 {text} .3594687 {text}       40 {text}-945.7868 {text}-919.2945 {text} -819.887
+
+{res}{txt}predictors for each model:
+
+1  {res}:  dlnLabFl2
+{txt}2  {res}:  dlnUnemRate1 dlnAllEmployeesl1
+{txt}3  {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnLabFl2
+{txt}4  {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnLabFl2 dlnAPEl1
+{txt}5  {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2
+{txt}6  {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4
+{txt}7  {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPGl1
+{txt}8  {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPGl1 dlnAPEl1
+{txt}9  {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPGl1 dlnAPGl4 dlnAPEl1
+{txt}10 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPGl1 dlnAPGl4 dlnAPEl1 dlnWeeklyHrsl4
+{txt}11 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnAPEl1 dlnWeeklyHrsl4
+{txt}12 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnAPEl1 dlnLabFl1 dlnWeeklyHrsl4
+{txt}13 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnAPEl3 dlnAPEl1 dlnWeeklyHrsl4
+{txt}14 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnAPEl3 dlnAPEl1 dlnLabFl1 dlnWeeklyHrsl4
+{txt}15 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnAPEl3 dlnAPEl1 dlnLabFl3 dlnLabFl1 dlnWeeklyHrsl4
+{txt}16 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnAPEl3 dlnAPEl1 dlnLabFl3 dlnLabFl1 dlnWeeklyHrsl4 dlnUnemRate3
+{txt}17 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnAPEl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl4
+{txt}18 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnAPEl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnLabFl1 dlnWeeklyHrsl4
+{txt}19 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl4
+{txt}20 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnWeeklyHrsl4
+{txt}21 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnLabFl1 dlnWeeklyHrsl4
+{txt}22 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnLabFl1 dlnWeeklyHrsl4 dlnWeeklyWagel1
+{txt}23 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnLabFl1 dlnWeeklyHrsl4 dlnWeeklyWagel1 dlnWeeklyWagel4
+{txt}24 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnLabFl1 dlnWeeklyHrsl4 dlnWeeklyWagel1 dlnWeeklyHrsl1 dlnWeeklyWagel4
+{txt}25 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnLabFl1 dlnWeeklyHrsl4 dlnWeeklyWagel1 dlnWeeklyHrsl1 dlnWeeklyWagel4 dlnAPEl2
+{txt}26 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnLabFl1 dlnWeeklyHrsl4 dlnWeeklyWagel1 dlnWeeklyHrsl1 dlnWeeklyWagel4 dlnAPEl2 dlnAPGl3
+{txt}27 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnLabFl1 dlnWeeklyHrsl4 dlnWeeklyWagel1 dlnWeeklyHrsl1 dlnWeeklyWagel4 dlnAPEl2 dlnAPGl3 dlnAPGl2
+{txt}28 {res}:  dlnUnemRate1 dlnAllEmployeesl1 dlnAllEmployeesl4 dlnLabFl4 dlnLabFl2 dlnUnemRate4 dlnAPEl4 dlnWeeklyWagel2 dlnAPGl1 dlnAPGl4 dlnWeeklyWagel3 dlnAPEl3 dlnWeeklyHrsl3 dlnAllEmployeesl2 dlnAPEl1 dlnUnemRate2 dlnLabFl3 dlnAllEmployeesl3 dlnWeeklyHrsl2 dlnLabFl1 dlnWeeklyHrsl4 dlnWeeklyWagel1 dlnWeeklyHrsl1 dlnWeeklyWagel4 dlnAPEl2 dlnAPGl3 dlnAPGl2 dlnUnemRate3
+{txt}
+{com}. 
+. *Vselecting the models for WeeklyWage
+. vselect dlnWeeklyWage dlnWeeklyWagel* dlnHourlyWagel* dlnAllEmployeesl* dlnWeeklyHrsl*   dlnLabFl* dlnUnemRate* dlnAPEl* dlnAPGl*, best fix( m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12)
+{txt}{p 0 4 2}94{txt} observations containing missing predictor values{p_end}
+
+
+Response :             {res}dlnWeeklyWage
+{txt}Fixed predictors :     {res}m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12
+{txt}Selected predictors:  {res} dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPEl4 dlnAPGl3 dlnLabFl3 dlnLabFl4 dlnAPEl1 dlnUnemRate3 dlnAPGl1 dlnWeeklyHrsl4 dlnHourlyWagel4 dlnWeeklyWagel4
+
+{text}Optimal models: {result}
+
+   # Preds     R2ADJ         C       AIC      AICC       BIC
+ {result}        1 {text} .1558034 {text} 21.77069 {text}-965.2953 {text}-962.6201 {text}-924.3779
+ {result}        2 {text} .2410016 {text} 5.890229 {text}-982.6788 {text}-979.6019 {text}-938.6139
+ {result}        3 {text} .2669345 {text} 1.852622 {text}-987.7504 {text}-984.2407 {result} -940.538
+ {result}        4 {text} .2782968 {text} .7208904 {result}-989.5363 {result}-985.5623 {text}-939.1764
+ {result}        5 {text} .2817725 {text} 1.145467 {text}-989.4728 {text}-985.0022 {text}-935.9653
+ {result}        6 {text} .2820424 {text} 2.195816 {text}-988.6507 {text}-983.6507 {text}-931.9958
+ {result}        7 {text}  .284798 {text} 2.771464 {text}-988.4326 {text}-982.8697 {text}-928.6302
+ {result}        8 {text}  .284947 {text} 3.849228 {text}-987.5963 {text}-981.4363 {text}-924.6464
+ {result}        9 {text} .2908681 {text} 3.837961 {text}-988.1618 {text}-981.3699 {text}-922.0645
+ {result}       10 {result} .2911281 {text} 4.902878 {text}-987.3678 {text}-979.9083 {text}-918.1229
+ {result}       11 {text} .2903689 {text}  6.15825 {text}-986.3342 {text}-978.1709 {text}-913.9418
+ {result}       12 {text} .2886175 {text} 7.595266 {text}-985.0684 {text}-976.1643 {text}-909.5286
+ {result}       13 {text} .2871065 {text} 8.983734 {text}-983.8696 {text}-974.1868 {text}-905.1822
+ {result}       14 {text} .2859697 {text} 10.30013 {text}-982.7696 {text}-972.2696 {text}-900.9348
+ {result}       15 {text} .2836332 {text} 11.83111 {text}-981.3898 {text}-970.0332 {text}-896.4075
+ {result}       16 {text} .2815406 {text} 13.31237 {text}-980.0785 {text}-967.8249 {text}-891.9486
+ {result}       17 {text} .2781952 {text} 15.01232 {text} -978.478 {text}-965.2865 {text}-887.2007
+ {result}       18 {text} .2742202 {text} 16.81564 {text}-976.7404 {text} -962.569 {text}-882.3156
+ {result}       19 {text} .2694786 {text} 18.74412 {text} -974.836 {text}-959.6417 {text}-877.2636
+ {result}       20 {text} .2654819 {text} 20.53042 {text}-973.1217 {text}-956.8608 {text}-872.4019
+ {result}       21 {text} .2613305 {text} 22.33358 {text}-971.3853 {text} -954.013 {text} -867.518
+ {result}       22 {text}   .25658 {text} 24.22972 {text}-969.5246 {text}-950.9952 {text}-862.5097
+ {result}       23 {text}  .251395 {text} 26.18838 {text}  -967.58 {text}-947.8467 {text}-857.4177
+ {result}       24 {text} .2460162 {text} 28.16701 {text}-965.6087 {text}-944.6236 {text}-852.2989
+ {result}       25 {text} .2408636 {text} 30.09405 {text}-963.7066 {text}-941.4209 {text}-847.2493
+ {result}       26 {text} .2355746 {text} 32.03103 {text}-961.7913 {text}-938.1549 {text}-842.1865
+ {result}       27 {text}  .230187 {text} 33.97119 {text}-959.8717 {text}-934.8335 {text}-837.1194
+ {result}       28 {text} .2239814 {text} 36.03285 {text}-957.7888 {text}-931.2965 {text}-831.8891
+ {result}       29 {text} .2182207 {text} 38.00615 {text}-955.8247 {text}-927.8247 {text}-826.7774
+ {result}       30 {text} .2122276 {text}  40.0028 {text}-953.8292 {text}-924.2667 {text}-821.6344
+ {result}       31 {text} .2061306 {text} 42.00123 {text}-951.8313 {text}-920.6502 {text}-816.4891
+ {result}       32 {text} .1999361 {text}       44 {text} -949.833 {text}-916.9758 {text}-811.3432
+
+{res}{txt}predictors for each model:
+
+1  {res}:  dlnWeeklyWagel3
+{txt}2  {res}:  dlnWeeklyWagel2 dlnWeeklyWagel1
+{txt}3  {res}:  dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyWagel1
+{txt}4  {res}:  dlnWeeklyWagel2 dlnWeeklyWagel3 dlnAllEmployeesl4 dlnWeeklyWagel1
+{txt}5  {res}:  dlnWeeklyWagel2 dlnWeeklyWagel3 dlnAllEmployeesl4 dlnHourlyWagel1 dlnWeeklyWagel1
+{txt}6  {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnHourlyWagel3 dlnAllEmployeesl4 dlnWeeklyHrsl1 dlnHourlyWagel1
+{txt}7  {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnHourlyWagel3 dlnAllEmployeesl4 dlnHourlyWagel1 dlnWeeklyWagel1 dlnWeeklyWagel4
+{txt}8  {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl4 dlnWeeklyWagel1
+{txt}9  {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl4 dlnWeeklyHrsl1 dlnHourlyWagel1
+{txt}10 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1
+{txt}11 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnAllEmployeesl3
+{txt}12 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1
+{txt}13 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyHrsl4
+{txt}14 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAllEmployeesl4 dlnLabFl2 dlnHourlyWagel1 dlnWeeklyWagel1 dlnWeeklyHrsl4
+{txt}15 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnAllEmployeesl3 dlnWeeklyHrsl4
+{txt}16 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnWeeklyWagel1 dlnAllEmployeesl3 dlnWeeklyHrsl4
+{txt}17 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnAllEmployeesl3 dlnWeeklyHrsl4
+{txt}18 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnAPGl4 dlnAllEmployeesl3 dlnWeeklyHrsl4
+{txt}19 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnAPGl2 dlnAPGl4 dlnAllEmployeesl3 dlnWeeklyHrsl4
+{txt}20 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnAllEmployeesl3 dlnWeeklyHrsl4
+{txt}21 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAPGl4 dlnAllEmployeesl3 dlnAPGl3 dlnWeeklyHrsl4
+{txt}22 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnWeeklyHrsl4
+{txt}23 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPGl3 dlnWeeklyHrsl4
+{txt}24 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnWeeklyHrsl4 dlnHourlyWagel4
+{txt}25 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPEl4 dlnAPGl3 dlnWeeklyHrsl4
+{txt}26 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPEl4 dlnAPGl3 dlnLabFl4 dlnWeeklyHrsl4
+{txt}27 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPEl4 dlnAPGl3 dlnLabFl4 dlnAPEl1 dlnWeeklyHrsl4
+{txt}28 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPEl4 dlnAPGl3 dlnLabFl3 dlnLabFl4 dlnWeeklyHrsl4 dlnHourlyWagel4
+{txt}29 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPEl4 dlnAPGl3 dlnLabFl3 dlnLabFl4 dlnAPEl1 dlnWeeklyHrsl4 dlnHourlyWagel4
+{txt}30 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPEl4 dlnAPGl3 dlnLabFl3 dlnLabFl4 dlnAPEl1 dlnUnemRate3 dlnWeeklyHrsl4 dlnHourlyWagel4
+{txt}31 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPEl4 dlnAPGl3 dlnLabFl3 dlnLabFl4 dlnAPEl1 dlnUnemRate3 dlnAPGl1 dlnWeeklyHrsl4 dlnHourlyWagel4
+{txt}32 {res}:  dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnAllEmployeesl1 dlnUnemRate1 dlnAPEl3 dlnAPEl2 dlnAllEmployeesl4 dlnLabFl2 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnUnemRate2 dlnAPGl2 dlnAllEmployeesl2 dlnLabFl1 dlnAPGl4 dlnUnemRate4 dlnAllEmployeesl3 dlnAPEl4 dlnAPGl3 dlnLabFl3 dlnLabFl4 dlnAPEl1 dlnUnemRate3 dlnAPGl1 dlnWeeklyHrsl4 dlnHourlyWagel4 dlnWeeklyWagel4
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. exit, clear

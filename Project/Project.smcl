@@ -1,0 +1,287 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}E:\Time Series\Project\Project.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}17 Apr 2022, 18:24:00
+{txt}
+{com}. 
+. *Import data from csv file.
+. import delimited "Project_Monthly.txt"
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{text}(12 vars, 266 obs)
+
+{com}. 
+. *Check to make sure data is imported.
+. describe
+
+{txt}Contains data
+ Observations:{res}           266                  
+{txt}    Variables:{res}            12                  
+{txt}{hline}
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+{hline}
+{p 0 48}{res}{bind:date           }{txt}{bind: str10   }{bind:{txt}%10s      }{space 1}{bind:         }{bind:  }{res}{res}DATE{p_end}
+{p 0 48}{bind:apus35b72610   }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}APUS35B72610{p_end}
+{p 0 48}{bind:apus35b74716   }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}APUS35B74716{p_end}
+{p 0 48}{bind:miam112lfn     }{txt}{bind: long    }{bind:{txt}%12.0g    }{space 1}{bind:         }{bind:  }{res}{res}MIAM112LFN{p_end}
+{p 0 48}{bind:miam112urn     }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}MIAM112URN{p_end}
+{p 0 48}{bind:smu123310005~01}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000001{p_end}
+{p 0 48}{bind:smu1233100050~2}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000002{p_end}
+{p 0 48}{bind:smu1233100050~3}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000003{p_end}
+{p 0 48}{bind:smu123310005~11}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}SMU12331000500000011{p_end}
+{p 0 48}{bind:v10            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:v11            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:v12            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{txt}{hline}
+Sorted by: 
+{res}     Note: Dataset has changed since last saved.
+{txt}
+{com}. summarize
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}date {c |}{res}          0
+{txt}apus35b72610 {c |}{res}        265     .112083    .0133757        .08       .164
+{txt}apus35b74716 {c |}{res}        266    2.885305    .7793685      1.356      4.352
+{txt}{space 2}miam112lfn {c |}{res}        266     2845569    207946.7    2475966    3193207
+{txt}{space 2}miam112urn {c |}{res}        266         5.5    2.565666        2.1       13.8
+{txt}{hline 13}{c +}{hline 57}
+smu123310~01 {c |}{res}        266    2084.412    183.9617     1834.6     2470.5
+{txt}smu1233100~2 {c |}{res}        182    35.06538    .5882454       32.3       36.3
+{txt}smu1233100~3 {c |}{res}        182    23.50538    1.898119      20.98       29.5
+{txt}smu123310~11 {c |}{res}        182    824.0697     66.1051     746.95    1029.55
+{txt}{space 9}v10 {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 9}v11 {c |}{res}          0
+{txt}{space 9}v12 {c |}{res}          0
+{txt}
+{com}. 
+. *Rename the four variables.
+. 
+. *Average Weekly Earnings of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000011 WeeklyWage
+{res}{txt}
+{com}. 
+. *Average Hourly Earnings of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000003 HourlyWage
+{res}{txt}
+{com}. 
+. *Average Weekly Hours of All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000002 WeeklyHrs
+{res}{txt}
+{com}. 
+. *All Employees: Total Private in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)
+. rename smu12331000500000001 AllEmployees
+{res}{txt}
+{com}. 
+. *Average Price: Electricity per Kilowatt-Hour in Miami-Fort Lauderdale-West Palm Beach, FL (CBSA)
+. rename apus35b72610 Average_Price_Elec
+{res}{txt}
+{com}. 
+. *Average Price: Gasoline, Unleaded Premium (Cost per Gallon/3.785 Liters) in Miami-Fort Lauderdale-West Palm Beach, FL (CBSA)
+. rename apus35b74716 Average_Price_Gas
+{res}{txt}
+{com}. 
+. *Civilian Labor Force in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)  
+. rename  miam112lfn Labor_Force
+{res}{txt}
+{com}. 
+. *Unemployment Rate in Miami-Fort Lauderdale-West Palm Beach, FL (MSA)  
+. rename miam112urn Unem_Rate
+{res}{txt}
+{com}. 
+. *Generate a monthly date variable (make its display format monthly time, %tm)
+. generate datestring=date(date,"YMD")
+{txt}
+{com}. gen datec = mofd(datestring)
+{txt}
+{com}. format datec %tm
+{txt}
+{com}. tsset datec
+{res}
+{p 0 15 2}{txt:Time variable: }{res:datec}{txt:, }{res:{bind:2000m1}}{txt: to }{res:{bind:2022m2}}{p_end}
+{txt}{col 9}Delta: {res}1 month
+{txt}
+{com}. 
+. keep if tin(,2022m2)
+{txt}(0 observations deleted)
+
+{com}. 
+. *add January 2020 to the data,
+. tsappend, add(1)
+{txt}
+{com}. gen month=month(dofm(datec))
+{txt}
+{com}. 
+. *Generate dummy month indicators
+. tabulate month, generate(m)
+
+      {txt}month {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}         23        8.61        8.61
+{txt}          2 {c |}{res}         23        8.61       17.23
+{txt}          3 {c |}{res}         23        8.61       25.84
+{txt}          4 {c |}{res}         22        8.24       34.08
+{txt}          5 {c |}{res}         22        8.24       42.32
+{txt}          6 {c |}{res}         22        8.24       50.56
+{txt}          7 {c |}{res}         22        8.24       58.80
+{txt}          8 {c |}{res}         22        8.24       67.04
+{txt}          9 {c |}{res}         22        8.24       75.28
+{txt}         10 {c |}{res}         22        8.24       83.52
+{txt}         11 {c |}{res}         22        8.24       91.76
+{txt}         12 {c |}{res}         22        8.24      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        267      100.00
+{txt}
+{com}. 
+. *Generate natural logs of the variables to be used in the analysis
+. gen lnLabF=ln(Labor_Force)
+{txt}(1 missing value generated)
+
+{com}. 
+. gen lnUnemRate=ln(Unem_Rate)
+{txt}(1 missing value generated)
+
+{com}. 
+. gen lnAllEmployees=ln(AllEmployees)
+{txt}(1 missing value generated)
+
+{com}. 
+. gen lnWeeklyWage=ln(WeeklyWage)
+{txt}(85 missing values generated)
+
+{com}. 
+. gen lnHourlyWage=ln(HourlyWage)
+{txt}(85 missing values generated)
+
+{com}. 
+. gen lnWeeklyHrs=ln(WeeklyHrs)
+{txt}(85 missing values generated)
+
+{com}. 
+. /*
+> *tsline plots
+> tsline lnAPE, title("tsline lnAPE") saving("tsline1", replace) 
+> 
+> tsline lnAPG, title("tsline lnAPG") saving("tsline2", replace) 
+> 
+> tsline lnLabF, title("tsline lnLabF") saving("tsline3", replace) 
+> 
+> tsline lnUnemRate, title("tsline lnUnemRate") saving("tsline4", replace) 
+> 
+> tsline lnAllEmployees, title("tsline lnAllEmployees") saving("tsline5", replace) 
+> 
+> tsline lnWeeklyWage, title("tsline lnWeeklyWage") saving("tsline6", replace) 
+> 
+> tsline lnHourlyWage, title("tsline lnHourlyWage") saving("tsline7", replace) 
+> 
+> tsline lnWeeklyHrs, title("tsline lnWeeklyHrs") saving("tsline8", replace) 
+> 
+> graph combine "tsline1" "tsline2" "tsline3" "tsline4", rows(2)
+> graph export "tsline1.emf", replace 
+> graph combine "tsline5" "tsline6" "tsline7" "tsline8", rows(2) 
+> graph export "tsline2.emf", replace
+> 
+> *AC
+> ac lnAPE, title("Autocorrelogram lnAPE") saving("ac1", replace) 
+> 
+> ac lnAPG, title("Autocorrelogram lnAPG") saving("ac2", replace) 
+> 
+> ac lnLabF, title("Autocorrelogram lnLabF") saving("ac3", replace) 
+> 
+> ac lnUnemRate, title("Autocorrelogram lnUnemRate") saving("ac4", replace) 
+> 
+> ac lnAllEmployees, title("Autocorrelogram lnAllEmployees") saving("ac5", replace) 
+> 
+> ac lnWeeklyWage, title("Autocorrelogram lnWeeklyWage") saving("ac6", replace) 
+> 
+> ac lnHourlyWage, title("Autocorrelogram lnHourlyWage") saving("ac7", replace) 
+> 
+> ac lnWeeklyHrs, title("Autocorrelogram lnWeeklyHrs") saving("ac8", replace) 
+> 
+> graph combine "ac1" "ac2" "ac3" "ac4", rows(2) 
+> graph export "dependence1.emf", replace
+> 
+> graph combine "ac5" "ac6" "ac7" "ac8", rows(2) 
+> graph export "dependence2.emf", replace
+> 
+> *PAC
+> 
+> pac lnAPE, title("Partial Autocorrelogram lnAPE") saving("pac1", replace) 
+> 
+> pac lnAPG, title("Partial Autocorrelogram lnAPG") saving("pac2", replace) 
+> 
+> pac lnLabF, title("Partial Autocorrelogram lnLabF") saving("pac3", replace) 
+> 
+> pac lnUnemRate, title("Partial Autocorrelogram lnUnemRate") saving("pac4", replace) 
+> 
+> pac lnAllEmployees, title("Partial Autocorrelogram lnAllEmployees") saving("pac5", replace) 
+> 
+> pac lnWeeklyWage, title("Partial Autocorrelogram lnWeeklyWage") saving("pac6", replace) 
+> 
+> pac lnHourlyWage, title("Partial Autocorrelogram lnHourlyWage") saving("pac7", replace) 
+> 
+> pac lnWeeklyHrs, title("Partial Autocorrelogram lnWeeklyHrs") saving("pac8", replace) 
+> 
+> 
+> 
+> graph combine "pac1" "pac2" "pac3" "pac4", rows(2) 
+> graph export "dependence3.emf", replace
+> 
+> graph combine "pac5" "pac6" "pac7" "pac8", rows(2) 
+> graph export "dependence4.emf", replace
+> */
+. 
+. *Generate lags for vselect
+. gen dlnWeeklyWage = d.lnWeeklyWage
+{txt}(86 missing values generated)
+
+{com}. 
+. quietly forvalues i = 1/12 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/12 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/10 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/10 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/12 {c -(}
+{txt}
+{com}. 
+. quietly forvalues i = 1/12 {c -(}
+{txt}
+{com}. 
+. *Vselecting the models for WeeklyWage
+. /*
+> vselect dlnWeeklyWage dlnWeeklyWagel* dlnHourlyWagel* dlnAllEmployeesl* dlnWeeklyHrsl* dlnLabFl* dlnUnemRate* dlnAPEl* dlnAPGl*, best fix( m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12)
+> */
+. 
+. vselect dlnWeeklyWage dlnWeeklyWagel* dlnHourlyWagel*  dlnWeeklyHrsl*, best fix( m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12)
+{txt}{p 0 4 2}98{txt} observations containing missing predictor values{p_end}
+
+
+Response :             {res}dlnWeeklyWage
+{txt}Fixed predictors :     {res}m2 m3 m4 m5 m6 m7 m8 m9 m10 m11 m12
+{txt}Selected predictors:  {res} dlnWeeklyWagel3 dlnWeeklyHrsl3 dlnHourlyWagel3 dlnWeeklyHrsl2 dlnHourlyWagel2 dlnWeeklyWagel2 dlnWeeklyHrsl4 dlnWeeklyWagel4 dlnHourlyWagel4 dlnWeeklyHrsl1 dlnHourlyWagel1 dlnWeeklyWagel1 dlnHourlyWagel12 dlnHourlyWagel11 dlnWeeklyWagel5 dlnWeeklyHrsl5 dlnHourlyWagel5 dlnHourlyWagel7 dlnWeeklyWagel7 dlnWeeklyHrsl7 dlnHourlyWagel6 dlnWeeklyHrsl6 dlnWeeklyWagel6 dlnHourlyWagel10 dlnWeeklyHrsl10 dlnWeeklyWagel10 dlnHourlyWagel9 dlnWeeklyWagel9 dlnWeeklyHrsl9 dlnHourlyWagel8 dlnWeeklyHrsl8 dlnWeeklyWagel8
+{err}{hline 2}Break{hline 2}
+{txt}{search r(1), local:r(1);}
+
+end of do-file
+
+{err}{hline 2}Break{hline 2}
+{txt}{search r(1), local:r(1);}
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}E:\Time Series\Project\Project.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}17 Apr 2022, 18:25:21
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
